@@ -1,0 +1,21 @@
+origen,destino,peso
+Biblioteca,Edificio de Ingenieria,120
+Biblioteca,Cafeteria,80
+Biblioteca,Edificio de Ciencias,150
+Biblioteca,Auditorio,200
+Edificio de Ingenieria,Edificio de Ciencias,90
+Edificio de Ingenieria,Laboratorios,60
+Edificio de Ingenieria,Edificio de Administracion,180
+Edificio de Ciencias,Laboratorios,75
+Edificio de Ciencias,Auditorio,110
+Edificio de Ciencias,Edificio de Medicina,220
+Laboratorios,Edificio de Medicina,130
+Laboratorios,Cafeteria,160
+Edificio de Medicina,Hospital Universitario,100
+Edificio de Medicina,Edificio de Administracion,190
+Hospital Universitario,Auditorio,250
+Hospital Universitario,Cafeteria,210
+Cafeteria,Edificio de Administracion,140
+Cafeteria,Gimnasio,170
+Gimnasio,Auditorio,95
+Edificio de Administracion,Biblioteca,160

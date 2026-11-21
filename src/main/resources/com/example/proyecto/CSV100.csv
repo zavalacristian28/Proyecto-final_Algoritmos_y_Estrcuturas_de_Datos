@@ -1,0 +1,101 @@
+origen,destino,peso
+Mexicali,Tijuana,180
+Mexicali,Ensenada,250
+Mexicali,San Luis Rio Colorado,70
+Mexicali,Tecate,160
+Tijuana,Ensenada,110
+Tijuana,Tecate,45
+Tijuana,Rosarito,25
+Tijuana,San Diego,35
+Ensenada,Rosarito,85
+Ensenada,Tecate,130
+Ensenada,San Quintin,190
+Tecate,San Luis Rio Colorado,210
+Tecate,Rosarito,65
+Rosarito,San Quintin,240
+San Luis Rio Colorado,Puerto Penasco,100
+San Luis Rio Colorado,Hermosillo,290
+Hermosillo,Guaymas,135
+Hermosillo,Ciudad Obregon,250
+Hermosillo,Nogales,280
+Hermosillo,Cananea,160
+Guaymas,Ciudad Obregon,120
+Guaymas,Navojoa,190
+Ciudad Obregon,Navojoa,65
+Ciudad Obregon,Los Mochis,220
+Navojoa,Los Mochis,150
+Los Mochis,Culiacan,220
+Culiacan,Mazatlan,220
+Culiacan,Durango,450
+Mazatlan,Durango,300
+Mazatlan,Tepic,280
+Tepic,Guadalajara,210
+Tepic,Puerto Vallarta,165
+Guadalajara,Puerto Vallarta,330
+Guadalajara,Leon,220
+Guadalajara,Aguascalientes,220
+Guadalajara,Colima,190
+Leon,Aguascalientes,125
+Leon,Queretaro,170
+Leon,Guanajuato,55
+Guanajuato,Queretaro,115
+Queretaro,Ciudad de Mexico,220
+Queretaro,San Luis Potosi,205
+Queretaro,Morelia,180
+Ciudad de Mexico,Puebla,135
+Ciudad de Mexico,Cuernavaca,90
+Ciudad de Mexico,Toluca,65
+Ciudad de Mexico,Pachuca,100
+Ciudad de Mexico,Morelia,300
+Puebla,Veracruz,280
+Puebla,Oaxaca,340
+Puebla,Cuernavaca,150
+Veracruz,Xalapa,105
+Veracruz,Coatzacoalcos,165
+Xalapa,Poza Rica,150
+Oaxaca,Puerto Escondido,260
+Oaxaca,Tuxtla Gutierrez,540
+Tuxtla Gutierrez,San Cristobal de las Casas,85
+Tuxtla Gutierrez,Villahermosa,240
+Villahermosa,Campeche,390
+Villahermosa,Ciudad del Carmen,170
+Campeche,Merida,180
+Campeche,Cancun,480
+Merida,Cancun,305
+Merida,Valladolid,160
+Cancun,Playa del Carmen,70
+Cancun,Chetumal,380
+Playa del Carmen,Tulum,65
+Tulum,Chetumal,250
+San Luis Potosi,Zacatecas,190
+San Luis Potosi,Monterrey,510
+San Luis Potosi,Saltillo,430
+Zacatecas,Aguascalientes,120
+Zacatecas,Durango,290
+Durango,Torreon,250
+Torreon,Chihuahua,400
+Torreon,Monterrey,330
+Monterrey,Saltillo,85
+Monterrey,Reynosa,220
+Monterrey,Nuevo Laredo,220
+Monterrey,Chihuahua,620
+Saltillo,Chihuahua,550
+Reynosa,Matamoros,90
+Reynosa,Ciudad Victoria,300
+Matamoros,Ciudad Victoria,320
+Ciudad Victoria,Tampico,240
+Tampico,Poza Rica,230
+Chihuahua,Ciudad Juarez,360
+Chihuahua,Delicias,85
+Chihuahua,Parral,230
+Ciudad Juarez,Delicias,380
+Nogales,Cananea,110
+Nogales,Hermosillo,280
+Cananea,Agua Prieta,120
+Agua Prieta,Chihuahua,430
+Puerto Penasco,Sonoyta,100
+Sonoyta,Mexicali,250
+San Quintin,Ensenada,190
+Colima,Morelia,350
+Colima,Manzanillo,100
+Manzanillo,Puerto Vallarta,280
