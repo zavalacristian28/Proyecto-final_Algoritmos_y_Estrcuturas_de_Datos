@@ -12,8 +12,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         Fondo fondo= new Fondo();
 
-        Scene scene = new Scene(fondo.getPanel(), 820, 740);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fondo.getPanel(), 1100, 700);
+        stage.setTitle("Proyecto Final de Grafos");
         stage.setScene(scene);
         stage.show();
     }
