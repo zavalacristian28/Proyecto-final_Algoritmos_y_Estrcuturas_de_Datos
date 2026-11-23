@@ -27,6 +27,9 @@ public class Fondo {
     //Panel para los botones
     private VBox panelControladores;
 
+    //Combobox para la carga de los 3 csv
+    private ComboBox<String> cargaCSV;
+
     public Fondo(){
         panelPrincipal = new BorderPane();
         panelPrincipal.setStyle("-fx-background-color: #f4f6f9;");
@@ -73,7 +76,7 @@ public class Fondo {
         txtDestino.setPromptText("Vertice Destino");
 
         TextField txtPeso = new TextField();
-        txtPeso.setPromptText("Peso (costo)");
+        txtPeso.setPromptText("Peso (distancia)");
 
         Button btnAgregarArista = new Button("Conectar Ubicaciones");
         btnAgregarArista.setMaxWidth(Double.MAX_VALUE);
@@ -91,6 +94,18 @@ public class Fondo {
         Button btnLimpiarGrafo = new Button("Limpiar Lienzo");
         btnLimpiarGrafo.setMaxWidth(Double.MAX_VALUE);
 
+        Label lblCSV = new Label("Carga de CSV");
+        lblCSV.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+
+        //Combobox para elegir entre los 3 CSV
+        cargaCSV = new ComboBox<>();
+        cargaCSV.getItems().addAll("CSV20.csv", "CSV100.csv", "CSV500.csv");
+        cargaCSV.setPromptText("Selecciona un archivo CSV");
+        cargaCSV.setMaxWidth(Double.MAX_VALUE);
+
+        Button btnCSV = new Button("Cargar CSV");
+        btnCSV.setMaxWidth(Double.MAX_VALUE);
+
         // Agregamos todos los elementos visuales al panel izquierdo
         panelControladores.getChildren().addAll(
                 lblManual,
@@ -106,7 +121,11 @@ public class Fondo {
                 lblOpciones,
                 btnMostrarMatriz,
                 btnMostrarLista,
-                btnLimpiarGrafo
+                btnLimpiarGrafo,
+                new Separator(),
+                lblCSV,
+                cargaCSV,
+                btnCSV
         );
 
 
