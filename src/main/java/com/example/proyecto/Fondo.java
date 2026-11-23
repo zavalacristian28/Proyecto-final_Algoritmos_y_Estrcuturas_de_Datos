@@ -17,6 +17,14 @@ import javafx.scene.control.TextField;
 import javax.swing.*;
 
 public class Fondo {
+    private static Fondo instancia;
+    TextField textFieldVertice;
+    TextField txtOrigen;
+    TextField txtPeso;
+    TextField txtDestino;
+    TextField txtNombreGrafo;
+    Button btnExportarCsv;
+    private static boolean botonExportarPresionado = false;
 
     //Contenido principal que dividira las zonas de la pantalla
     private BorderPane panelPrincipal;
@@ -31,6 +39,7 @@ public class Fondo {
     private ComboBox<String> cargaCSV;
 
     public Fondo(){
+        instancia=this;
         panelPrincipal = new BorderPane();
         panelPrincipal.setStyle("-fx-background-color: #f4f6f9;");
 
@@ -66,20 +75,28 @@ public class Fondo {
         TextField textFieldVertice = new TextField();
         textFieldVertice.setPromptText("nombre de la ubicacion del vertice");
 
+        txtNombreGrafo=new TextField();
+        txtNombreGrafo.setPromptText("Ingresa el nombre del grafo: ");
+
         Button btnAgregarVertice = new Button("Agregar Vertice");
         btnAgregarVertice.setMaxWidth(Double.MAX_VALUE);
 
-        TextField txtOrigen = new TextField();
+         txtOrigen = new TextField();
         txtOrigen.setPromptText("Vertice Origen");
 
-        TextField txtDestino = new TextField();
+
+         txtDestino = new TextField();
         txtDestino.setPromptText("Vertice Destino");
 
-        TextField txtPeso = new TextField();
+        txtPeso = new TextField();
         txtPeso.setPromptText("Peso (distancia)");
 
         Button btnAgregarArista = new Button("Conectar Ubicaciones");
         btnAgregarArista.setMaxWidth(Double.MAX_VALUE);
+        btnExportarCsv=new Button("Guardar en CSV");
+        btnExportarCsv.setOnAction(event ->{
+            botonExportarPresionado=true;
+        });
 
         //Botones generales
         Label lblOpciones = new Label("Opciones del Grafo");
@@ -138,6 +155,31 @@ public class Fondo {
         return panelPrincipal;
     }
 
+    public TextField getTxtOrigen(){
+        return txtOrigen;
+    }
+    public TextField getTxtPeso(){
+        return txtPeso;
+    }
+    public TextField getTxtDestino(){
+        return txtDestino;
+    }
+
+    public static String valorTxtOrigen() {
+        return instancia.txtOrigen.getText();
+    }
+
+    public static String valorTxtDestino() {
+        return instancia.txtDestino.getText();
+    }
+
+    public static String valorTxtPeso() {
+        return instancia.txtPeso.getText();
+    }
+
+    public static boolean BotonExportarPresionado(){
+        return botonExportarPresionado;
+    }
 
 
 }
