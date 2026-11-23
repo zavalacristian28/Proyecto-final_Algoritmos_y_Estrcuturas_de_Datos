@@ -1,5 +1,7 @@
 package com.example.proyecto;
 
+import Logica.Archivo;
+import Logica.Grafo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +13,9 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Fondo fondo= new Fondo();
-
+        Archivo archivo=new Archivo();
+        Grafo grafo=archivo.cargarArchivo(20);
+        grafo.mostrarGrafo();
         Scene scene = new Scene(fondo.getPanel(), 820, 740);
         stage.setTitle("Hello!");
         stage.setScene(scene);
