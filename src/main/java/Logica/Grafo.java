@@ -10,13 +10,11 @@ public class Grafo {
     public Grafo() {
         this.vertices = new ArrayList<>();
         this.dirigido = false;
-        matrizAdyacencia=new double[vertices.size()][vertices.size()];
     }
 
     public Grafo(boolean dirigido) {
         this.vertices = new ArrayList<>();
         this.dirigido = dirigido;
-        matrizAdyacencia=new double[vertices.size()][vertices.size()];
     }
     public ArrayList<Vertice> getVertices(){
         return vertices;
@@ -53,6 +51,7 @@ public class Grafo {
 
     public void crearMatrizAdyacencia() {
         int n = vertices.size();
+        matrizAdyacencia = new double[vertices.size()][vertices.size()];
         for (Vertice v : vertices) {
             int renglon = v.getId_Vertice();
             for (Arista a : v.getAristas()) {
@@ -85,8 +84,15 @@ public class Grafo {
     }
 
     public void mostrarListaAdyacencia() {
-
+        for (Vertice v : vertices) {
+            System.out.print(v.getDato() + " -> ");
+            for (Arista a : v.getAristas()) {
+                System.out.print(a.getDestino().getDato() + "(" + a.getPeso() + ") ");
+            }
+            System.out.println();
+        }
     }
+
     public void mostrarGrafo() {
 
         for (Vertice v : vertices) {

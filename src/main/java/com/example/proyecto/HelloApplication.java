@@ -15,7 +15,10 @@ public class HelloApplication extends Application {
         Fondo fondo= new Fondo();
         Archivo archivo=new Archivo();
         Grafo grafo=archivo.cargarArchivo(20);
-        grafo.mostrarGrafo();
+       // grafo.mostrarGrafo();
+        grafo.crearMatrizAdyacencia();
+        grafo.mostrarMatrizAdyacencia();
+        grafo.mostrarListaAdyacencia();
         Scene scene = new Scene(fondo.getPanel(), 820, 740);
         stage.setTitle("Hello!");
         stage.setScene(scene);
