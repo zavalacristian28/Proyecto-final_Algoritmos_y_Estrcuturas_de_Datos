@@ -20,35 +20,39 @@ public class AccionesConElGrafo {
     public Grafo crearGrafo(){
 
         String nombreGrafo;
+        int idArista=0;
+        Grafo grafo=new Grafo(true);
+        while(Fondo.BotonExportarPresionado()) {
+            Vertice origen = new Vertice();
+            Vertice destino = new Vertice();
+            Arista arista = new Arista();
+            //Aqui se añadira el textField del nombre del archivo
+            nombreGrafo = "";
+            //Aqui va a ir el textField.getValue de origen
+            String datoOrigen = Fondo.valorTxtOrigen();
+            String datoDestino = Fondo.valorTxtDestino();
+            //Validacion por si son el mismo dato
+            while (datoDestino.equals(datoOrigen)) {
+                Labels.texto("El vertice de destino no puede ser igual al de destino, ingresa otro: ");
+                //Aqui se obtendra el nuevo valor de destino
+                datoDestino = Fondo.valorTxtDestino();
+            }
+            //Aqui el textFiel.getValue del peso
+            String Textopeso = Fondo.valorTxtPeso();
+            int peso = Integer.parseInt(Textopeso);
+            //validacion para pesos negativos
+            while (peso < 0) {
+                Labels.texto("Peso invalido. El peso no puede ser negativo, ingresa otro: ");
+                //Aqui se obtendra de nuevo del textField.getValue
+                Textopeso = Fondo.valorTxtPeso();
+                peso = Integer.parseInt(Textopeso);
+            }
 
-        while(Fondo.BotonExportarPresionado()){
+            grafo.agregarArista(idArista, datoOrigen, datoDestino, peso);
 
+            idArista++;
         }
-        Vertice origen=new Vertice();
-        Vertice destino=new Vertice();
-        Arista arista=new Arista();
-        //Aqui se añadira el textField del nombre del archivo
-        nombreGrafo="";
-        //Aqui va a ir el textField.getValue de origen
-        String datoOrigen= Fondo.valorTxtOrigen();
-        String datoDestino=Fondo.valorTxtDestino();
-        //Validacion por si son el mismo dato
-        while(datoDestino.equals(datoOrigen)){
-            Labels.texto("El vertice de destino no puede ser igual al de destino, ingresa otro: ");
-            //Aqui se obtendra el nuevo valor de destino
-            datoDestino=Fondo.valorTxtDestino();
-        }
-        //Aqui el textFiel.getValue del peso
-        String Textopeso=Fondo.valorTxtPeso();
-        int peso=Integer.parseInt(Textopeso);
-        //validacion para pesos negativos
-        while (peso<0){
-            Labels.texto("Peso invalido. El peso no puede ser negativo, ingresa otro: ");
-            //Aqui se obtendra de nuevo del textField.getValue
-            Textopeso=Fondo.valorTxtPeso();
-            peso=Integer.parseInt(Textopeso);
-        }
-        Grafo grafo=new Grafo();
+    return grafo;
     }
 
     public void modificarGrafo(Grafo grafo){
