@@ -56,6 +56,7 @@ public class AccionesConElGrafo {
 
         Archivo.guardarGrafoEnArchivo(grafo,nombreGrafo);
         Fondo.añadirValorAlComboBox(nombreGrafo);
+        Fondo.llenarComboBoxVertices(grafo);
 
     return grafo;
     }
@@ -91,6 +92,7 @@ public class AccionesConElGrafo {
                     String nombreVEliminar=Fondo.valorTxtOrigen();
                     if(grafoCargado.eliminarVertice(nombreVEliminar)){
                         Labels.texto("Vertice eliminado correctamente");
+                        Fondo.llenarComboBoxVertices(grafo);
                     }else{
                         Labels.texto("No se pudo eliminar el vertice");
                     }
@@ -106,5 +108,27 @@ public class AccionesConElGrafo {
                 break;
         }
         Archivo.guardarGrafoEnArchivo(grafoCargado,nombreACargar);
+    }
+
+    public void buscarEnAnchura(Grafo grafo){
+        String nombre=Fondo.valorComboBoxVerticesGrafo();
+        Vertice inicio=grafo.buscarVertice(nombre);
+        while(inicio==null){
+            Labels.texto("Selecciona un vertice valido");
+            nombre=Fondo.valorComboBoxVerticesGrafo();
+        }
+        String resultadoBFS=AlgoritmosBusOrd.BFS(inicio.getId_Vertice());
+        Labels.texto("Recorrido BFS: "+resultadoBFS);
+    }
+
+    public void buscarEnProfundidad(Grafo grafo){
+        String nombre=Fondo.valorComboBoxVerticesGrafo();
+        Vertice inicio=grafo.buscarVertice(nombre);
+        while(inicio==null){
+            Labels.texto("Selecciona un vertice valido");
+            nombre=Fondo.valorComboBoxVerticesGrafo();
+        }
+        String resultado=AlgoritmosBusOrd.DFS(grafo,inicio.getId_Vertice());
+        Labels.texto("Recorrido DFS: "+resultado);
     }
 }

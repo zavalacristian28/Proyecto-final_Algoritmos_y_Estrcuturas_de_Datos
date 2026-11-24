@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 //Algoritmos de busqueda y ordenamiento
 public class AlgoritmosBusOrd {
-    private Grafo grafo;
+
+    //posiblemente esto cause errores por ser static
+    private static Grafo grafo;
 
     public AlgoritmosBusOrd(){
         grafo=new Grafo();
@@ -79,57 +81,62 @@ public class AlgoritmosBusOrd {
     /*
         Metodos de busqueda BFS y DFS
      */
-    public void BFS(int inicio) {
-
+    public static String BFS(int inicio) {
+        if (inicio < 0 || inicio >= grafo.getVertices().size()) {
+            return "Vertice inicial invalido";
+        }
         boolean[] visitados = new boolean[grafo.getVertices().size()];
-
         ColaSimple<Integer> cola = new ColaSimple<>();
-
+        StringBuilder recorridos=new StringBuilder();
         visitados[inicio] = true;
         cola.insertarDato(inicio);
 
         while (cola.tamaño() != 0) {
-
             int actual = cola.eliminarDato();
-
-            System.out.print(actual + " ");
+            String nombre = grafo.getVertices().get(actual).getDato();
+            recorridos.append(nombre).append(" -> ");
 
             ArrayList<Arista> aristasActuales =
                     grafo.getVertices().get(actual).getAristas();
-
             for (Arista arista : aristasActuales) {
-
                 int vecino = arista.getDestino().getId_Vertice();
-
                 if (!visitados[vecino]) {
-
                     visitados[vecino] = true;
-
                     cola.insertarDato(vecino);
                 }
             }
         }
+        if (recorridos.length() > 0) {
+            recorridos.setLength(recorridos.length() - 4);
+        }
+        return recorridos.toString();
     }
 
-    public void DFS(int inicio) {
+    /*
+        Adaptacion a este programa, principales cambios fueron que es metodo de tipo String, recibe un
+        grafo y se utilizo el StringBuilder
+     */
+
+    public static String DFS(Grafo grafo,int inicio) {
+        if (inicio < 0 || inicio >= grafo.getVertices().size()) {
+            return "Vertice inicial invalido";
+        }
 
         boolean[] visitados = new boolean[grafo.getVertices().size()];
-
         Pila<Integer> pila = new Pila<>();
-
+        StringBuilder recorrido = new StringBuilder();
         pila.push(inicio);
 
         while (pila.longitudPila(pila) != 0) {
 
             int actual = pila.pop();
-
             if (!visitados[actual]) {
-
                 visitados[actual] = true;
 
-                System.out.print(actual + " ");
-
+                String nombre = grafo.getVertices().get(actual).getDato();
+                recorrido.append(nombre).append(" -> ");
                 ArrayList<Arista> aristasActuales = grafo.getVertices().get(actual).getAristas();
+
                 for (int i = aristasActuales.size() - 1; i >= 0; i--) {
                     int vecino = aristasActuales.get(i).getDestino().getId_Vertice();
                     if (!visitados[vecino]) {
@@ -138,6 +145,10 @@ public class AlgoritmosBusOrd {
                 }
             }
         }
+        if (recorrido.length() > 0) {
+            recorrido.setLength(recorrido.length() - 4);
+        }
+        return recorrido.toString();
     }
 
 }

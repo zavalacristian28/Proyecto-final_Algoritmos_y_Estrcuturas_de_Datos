@@ -1,6 +1,8 @@
 
 package com.example.proyecto;
 
+import Logica.Grafo;
+import Logica.Vertice;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import javax.swing.*;
 
 public class Fondo {
 
@@ -33,6 +37,7 @@ public class Fondo {
     // ComboBox
     private static ComboBox<String> cargaCSV;
     private static ComboBox<String> operacionesModificables;
+    private static ComboBox<String> verticesDelGrafo;
 
     public Fondo() {
 
@@ -140,6 +145,11 @@ public class Fondo {
                 "Modificar peso", "Modificar valor del vertice","Eliminar vertice","Eliminar arista"
         );
 
+        verticesDelGrafo=new ComboBox<>();
+       /*
+        Queda pendiente asignar los valores del combobox vertices del grafo
+        */
+
         cargaCSV.setPromptText("Selecciona un archivo CSV");
         cargaCSV.setMaxWidth(Double.MAX_VALUE);
 
@@ -237,4 +247,15 @@ public class Fondo {
     public static String valorComboBoxOpModificables(){
         return instancia.operacionesModificables.getValue();
     }
+    public static String valorComboBoxVerticesGrafo(){
+        return instancia.verticesDelGrafo.getValue();
+    }
+
+    public static void llenarComboBoxVertices(Grafo grafo) {
+        instancia.verticesDelGrafo.getItems().clear();
+        for (Vertice v : grafo.getVertices()) {
+            instancia.verticesDelGrafo.getItems().add(v.getDato());
+        }
+    }
+
 }

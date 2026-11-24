@@ -15,6 +15,8 @@ public class Archivo {
         rutaArchivo="C:/Users/Zaval/IdeaProjects/Proyecto/Proyecto/src/main/resources/com/example/proyecto/CSV"+nombre+".csv";
         Grafo grafo=new Grafo(true);
         int idArista=0;
+        int numVertices=0;
+        int numAristas=0;
         try(BufferedReader bf=new BufferedReader(new FileReader(rutaArchivo))){
             String linea;
             bf.readLine();
@@ -54,6 +56,10 @@ public class Archivo {
 
                 grafo.agregarArista(idArista,origen,destino,peso);
                 idArista++;
+                /*
+                    Queda pendiente contar el numero de vertices cargadso y de aristas y añadirlos
+                    al Labels.texto como label informativo
+                 */
             }
 
         }catch (IOException e){
