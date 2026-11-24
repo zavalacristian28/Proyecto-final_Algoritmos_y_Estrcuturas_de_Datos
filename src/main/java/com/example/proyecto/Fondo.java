@@ -38,6 +38,7 @@ public class Fondo {
     private static ComboBox<String> cargaCSV;
     private static ComboBox<String> operacionesModificables;
     private static ComboBox<String> verticesDelGrafo;
+    private static ComboBox<String> verticesDestino;
 
     public Fondo() {
 
@@ -146,9 +147,7 @@ public class Fondo {
         );
 
         verticesDelGrafo=new ComboBox<>();
-       /*
-        Queda pendiente asignar los valores del combobox vertices del grafo
-        */
+        verticesDestino=new ComboBox<>();
 
         cargaCSV.setPromptText("Selecciona un archivo CSV");
         cargaCSV.setMaxWidth(Double.MAX_VALUE);
@@ -250,11 +249,15 @@ public class Fondo {
     public static String valorComboBoxVerticesGrafo(){
         return instancia.verticesDelGrafo.getValue();
     }
+    public static String valorComboBoxVerticesDestino(){
+        return instancia.verticesDestino.getValue();
+    }
 
     public static void llenarComboBoxVertices(Grafo grafo) {
         instancia.verticesDelGrafo.getItems().clear();
         for (Vertice v : grafo.getVertices()) {
-            instancia.verticesDelGrafo.getItems().add(v.getDato());
+            verticesDelGrafo.getItems().add(v.getDato());
+            verticesDestino.getItems().add(v.getDato());
         }
     }
 

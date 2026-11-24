@@ -1,6 +1,8 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 //Algoritmos de busqueda y ordenamiento
 public class AlgoritmosBusOrd {
@@ -149,6 +151,102 @@ public class AlgoritmosBusOrd {
             recorrido.setLength(recorrido.length() - 4);
         }
         return recorrido.toString();
+    }
+
+    public static String dijkstra(Grafo grafo, int inicio,int destino) {
+        grafo.crearMatrizAdyacencia();
+        double[][] matriz = grafo.getMatrizAdyacencia();
+        int n = matriz.length;
+        if (inicio < 0 || inicio >= n || destino < 0 || destino >= n) {
+            return "Vertice invalido";
+        }
+
+        double[] distancias = new double[n];
+        boolean[] visitados = new boolean[n];
+        int[] anteriores = new int[n];
+
+        //El Double Positive infinity genera un valor infinito para los demas vertices a excepcion del inicial
+
+        Arrays.fill(distancias, Double.POSITIVE_INFINITY);
+        Arrays.fill(anteriores, -1);
+        distancias[inicio] = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            int menor = -1;
+            // Buscar el nodo con menor distancia
+            for (int j = 0; j < n; j++) {
+                if (!visitados[j] &&
+                        (menor == -1 || distancias[j] < distancias[menor])) {
+                    menor = j;
+                }
+            }
+        //Double.isInfinite verifica si un valor es infinito todavia
+            if (menor == -1 || Double.isInfinite(distancias[menor])) {
+                break;
+            }
+
+            visitados[menor] = true;
+
+            // Actualizar las distancias de sus vecinos
+            for (int j = 0; j < n; j++) {
+
+                if (matriz[menor][j] > 0 && !visitados[j]) {
+
+                    int nuevaDistancia =
+                            (int) (distancias[menor] + matriz[menor][j]);
+
+                    if (nuevaDistancia < distancias[j]) {
+                        distancias[j] = nuevaDistancia;
+                        anteriores[j] = menor;
+                    }
+                }
+            }
+        }
+        if (Double.isInfinite(distancias[destino])) {
+            return "No existe una ruta entre los vertices seleccionados";
+        }
+        ArrayList<Integer> ruta = new ArrayList<>();
+        int actual=destino;
+        while (actual != -1) {
+            ruta.add(actual);
+            if (actual == inicio) {
+                break;
+            }
+            actual = anteriores[actual];
+        }
+        if (ruta.get(ruta.size() - 1) != inicio) {
+            return "No se pudo reconstruir la ruta";
+        }
+        Collections.reverse(ruta);
+
+        StringBuilder resultado = new StringBuilder();
+
+        resultado.append("Vertice de origen: ")
+                .append(grafo.getVertices().get(inicio).getDato())
+                .append("\n");
+
+        resultado.append("Vertice de destino: ")
+                .append(grafo.getVertices().get(destino).getDato())
+                .append("\n");
+
+        resultado.append("Ruta: ");
+
+        for (int i = 0; i < ruta.size(); i++) {
+
+            int id = ruta.get(i);
+
+            resultado.append(grafo.getVertices().get(id).getDato());
+
+            if (i < ruta.size() - 1) {
+                resultado.append(" -> ");
+            }
+        }
+
+        resultado.append("\nCosto total: ")
+                .append((long) distancias[destino]);
+
+        return resultado.toString();
     }
 
 }

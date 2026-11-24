@@ -131,4 +131,19 @@ public class AccionesConElGrafo {
         String resultado=AlgoritmosBusOrd.DFS(grafo,inicio.getId_Vertice());
         Labels.texto("Recorrido DFS: "+resultado);
     }
+
+    public void buscarConDijkstra(Grafo grafo){
+        String nombre=Fondo.valorComboBoxVerticesGrafo();
+        String nombreDestino=Fondo.valorComboBoxVerticesDestino();
+        Vertice inicio=grafo.buscarVertice(nombre);
+        Vertice destino=grafo.buscarVertice(nombreDestino);
+
+        if (inicio == null) {
+            Labels.texto("Selecciona un vertice valido");
+            return;
+        }
+
+        String resultado=AlgoritmosBusOrd.dijkstra(grafo,inicio.getId_Vertice(),destino.getId_Vertice());
+        Labels.texto(resultado);
+    }
 }

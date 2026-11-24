@@ -170,4 +170,7 @@ public class Grafo {
         return eliminada;
     }
 
+    public double[][] getMatrizAdyacencia() {
+        return matrizAdyacencia;
+    }
 }
