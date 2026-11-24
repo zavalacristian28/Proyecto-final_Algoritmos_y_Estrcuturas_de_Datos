@@ -5,6 +5,7 @@ import com.example.proyecto.Labels;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccionesConElGrafo {
     private ArrayList<Grafo> grafos;
@@ -110,7 +111,7 @@ public class AccionesConElGrafo {
         Archivo.guardarGrafoEnArchivo(grafoCargado,nombreACargar);
     }
 
-    public void buscarEnAnchura(Grafo grafo){
+    public static void buscarEnAnchura(Grafo grafo){
         String nombre=Fondo.valorComboBoxVerticesGrafo();
         Vertice inicio=grafo.buscarVertice(nombre);
         while(inicio==null){
@@ -121,7 +122,7 @@ public class AccionesConElGrafo {
         Labels.texto("Recorrido BFS: "+resultadoBFS);
     }
 
-    public void buscarEnProfundidad(Grafo grafo){
+    public static void buscarEnProfundidad(Grafo grafo){
         String nombre=Fondo.valorComboBoxVerticesGrafo();
         Vertice inicio=grafo.buscarVertice(nombre);
         while(inicio==null){
@@ -132,7 +133,7 @@ public class AccionesConElGrafo {
         Labels.texto("Recorrido DFS: "+resultado);
     }
 
-    public void buscarConDijkstra(Grafo grafo){
+    public static void buscarConDijkstra(Grafo grafo){
         String nombre=Fondo.valorComboBoxVerticesGrafo();
         String nombreDestino=Fondo.valorComboBoxVerticesDestino();
         Vertice inicio=grafo.buscarVertice(nombre);
@@ -147,7 +148,7 @@ public class AccionesConElGrafo {
         Labels.texto(resultado);
     }
 
-    public String ordenarQuicksort(Grafo grafo){
+    public static String ordenarQuicksort(Grafo grafo){
         int n = grafo.getVertices().size();
 
         String[] vertices = new String[n];
@@ -165,7 +166,7 @@ public class AccionesConElGrafo {
         return resultado.toString();
     }
 
-    public String ordenarShell(Grafo grafo){
+    public static String ordenarShell(Grafo grafo){
         int n = grafo.getVertices().size();
         String[] vertices = new String[n];
 
@@ -182,4 +183,56 @@ public class AccionesConElGrafo {
         }
         return resultado.toString();
     }
+
+    public static Resultados medirTiempo(String metodo, Grafo grafo,int inicio, int destino){
+        long tiempoInicial=System.nanoTime();
+        switch(metodo){
+            case "Quicksort":
+                AccionesConElGrafo.ordenarQuicksort(grafo);
+                break;
+
+            case "Shell":
+                AccionesConElGrafo.ordenarShell(grafo);
+                break;
+
+            case "Dijkstra":
+                AccionesConElGrafo.buscarConDijkstra(grafo);
+                break;
+
+            case "BFS":
+                AccionesConElGrafo.buscarEnAnchura(grafo);
+                break;
+
+            case "DFS":
+                AccionesConElGrafo.buscarEnProfundidad(grafo);
+                break;
+        }
+        long tiempoFinal=System.nanoTime();
+        double tiempoMS=(tiempoFinal-tiempoInicial)/1_000_000.0;
+        return new Resultados(metodo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
+    }
+    public static int contarAristas(Grafo grafo) {
+
+        int cantidad = 0;
+
+        for (Vertice v : grafo.getVertices()) {
+            cantidad += v.getAristas().size();
+        }
+
+        return cantidad;
+    }
+    public static Resultados medirCargaArchivo(String nombreArchivo) {
+
+        long tiempoInicial = System.nanoTime();
+
+        Grafo grafo = Archivo.cargarArchivo(nombreArchivo);
+
+        long tiempoFinal = System.nanoTime();
+
+        double tiempoMS = (tiempoFinal - tiempoInicial) / 1_000_000.0;
+
+        return new Resultados("Carga CSV: " + nombreArchivo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo)
+        );
+    }
 }
+

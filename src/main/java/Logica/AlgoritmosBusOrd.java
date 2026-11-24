@@ -3,6 +3,7 @@ package Logica;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 //Algoritmos de busqueda y ordenamiento
 public class AlgoritmosBusOrd {
