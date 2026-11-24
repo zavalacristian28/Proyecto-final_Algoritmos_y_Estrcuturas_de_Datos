@@ -146,4 +146,40 @@ public class AccionesConElGrafo {
         String resultado=AlgoritmosBusOrd.dijkstra(grafo,inicio.getId_Vertice(),destino.getId_Vertice());
         Labels.texto(resultado);
     }
+
+    public String ordenarQuicksort(Grafo grafo){
+        int n = grafo.getVertices().size();
+
+        String[] vertices = new String[n];
+        for (int i = 0; i < n; i++) {
+            vertices[i] = grafo.getVertices().get(i).getDato();
+        }
+        if (n > 1) {
+            AlgoritmosBusOrd.QuickSort(vertices, 0, n - 1);
+        }
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Vertices ordenados:\n");
+        for (String v : vertices) {
+            resultado.append(v).append("\n");
+        }
+        return resultado.toString();
+    }
+
+    public String ordenarShell(Grafo grafo){
+        int n = grafo.getVertices().size();
+        String[] vertices = new String[n];
+
+        for (int i = 0; i < n; i++) {
+            vertices[i] = grafo.getVertices().get(i).getDato();
+        }
+
+        AlgoritmosBusOrd.shell(vertices, n);
+
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Vertices ordenados con Shell Sort:\n");
+        for (String v : vertices) {
+            resultado.append(v).append("\n");
+        }
+        return resultado.toString();
+    }
 }

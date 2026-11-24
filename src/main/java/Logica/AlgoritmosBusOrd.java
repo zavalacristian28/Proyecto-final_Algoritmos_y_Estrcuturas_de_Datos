@@ -18,18 +18,18 @@ public class AlgoritmosBusOrd {
     Shell sort y QuickSort, implementaciones
     en base a los algoritmos vistos en la clase
      */
-    public static void shell(int a[], int n) {
+    public static void shell(String a[], int n) {
         int inter = n / 2;
         boolean band;
         int i;
-        int aux;
+        String aux;
         while (inter > 0) {
             band = true;
             while (band) {
                 band = false;
                 i = 0;
                 while ((i + inter) < n) {
-                    if (a[i] > a[i + inter]) {
+                    if (a[i].compareToIgnoreCase(a[i + inter]) > 0) {
                         aux = a[i];
                         a[i] = a[i + inter];
                         a[i + inter] = aux;
@@ -42,7 +42,7 @@ public class AlgoritmosBusOrd {
         }
     }
 
-    public void QuickSort(int[] A, int ini, int fin) {
+    public static void QuickSort(String[] A, int ini, int fin) {
         int izq = ini;
         int der = fin;
         int pos = ini;
@@ -51,15 +51,15 @@ public class AlgoritmosBusOrd {
         while (band) {
             band = false;
 
-            while (A[pos] <= A[der] && pos != der) {
+            while (A[pos].compareToIgnoreCase(A[der]) <= 0 && pos != der) {
                 der = der - 1;
             }
             if (pos != der) {
-                int aux = A[pos];
+                String aux = A[pos];
                 A[pos] = A[der];
                 A[der] = aux;
                 pos = der;
-                while (A[pos] >= A[izq] && pos != izq) {
+                while (A[pos].compareToIgnoreCase(A[izq]) >= 0 && pos != izq) {
                     izq = izq + 1;
                 }
                 if (pos != izq) {
