@@ -34,4 +34,11 @@ public class Vertice {
     public int getGrado_Vertice(){
         return grado_Vertice;
     }
+    public void setDato(String dato) {
+        this.dato = dato;
+    }
+
+    public void setId_Vertice(int id_Vertice) {
+        this.id_Vertice = id_Vertice;
+    }
 }

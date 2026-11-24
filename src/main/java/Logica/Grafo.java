@@ -87,20 +87,87 @@ public class Grafo {
     }
 
     public void mostrarListaAdyacencia() {
-
         for (Vertice v : vertices) {
-
             System.out.print(v.getDato() + " -> ");
-
             for (Arista a : v.getAristas()) {
-
                 System.out.print(
                         a.getDestino().getDato() +
                                 "(" + a.getPeso() + ") "
                 );
             }
-
             System.out.println();
         }
     }
+
+    //Metodo añadido para poder actualizar el peso cuando se modifica un grafo
+    public boolean modificarPeso(String origen, String destino, int nuevoPeso) {
+        if (nuevoPeso < 0) {
+            return false;
+        }
+        Vertice vOrigen = buscarVertice(origen);
+        if (vOrigen == null) {
+            return false;
+        }
+        for (Arista a : vOrigen.getAristas()) {
+            if (a.getDestino().getDato().equalsIgnoreCase(destino)) {
+                a.setPeso(nuevoPeso);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Metodo para poder actualizar el nombre o texto de un vertice
+    public boolean modificarVertice(String nombreActual, String nuevoNombre) {
+        Vertice vertice = buscarVertice(nombreActual);
+        if (vertice == null || nuevoNombre == null || nuevoNombre.trim().isEmpty()) {
+            return false;
+        }
+
+        // Evitamos nombres duplicados
+        if (buscarVertice(nuevoNombre) != null) {
+            return false;
+        }
+        vertice.setDato(nuevoNombre.trim());
+        return true;
+    }
+
+    //Metodo para eliminar un vertice, donde se eliminar las aristas relacionadas con el
+    public boolean eliminarVertice(String nombre) {
+        Vertice eliminado = buscarVertice(nombre);
+        if (eliminado == null) {
+            return false;
+        }
+
+        // Eliminar las aristas que llegan al vertice
+        for (Vertice v : vertices) {
+            v.getAristas().removeIf(a -> a.getDestino() == eliminado);
+        }
+
+        vertices.remove(eliminado);
+
+        //Con este ciclo, se re actualizan los id de los vertices contemplando el eliminado
+        for (int i = 0; i < vertices.size(); i++) {
+            vertices.get(i).setId_Vertice(i);
+        }
+        //Finalmente se actualiza la matriz de adyacencia
+        crearMatrizAdyacencia();
+
+        return true;
+    }
+
+    public boolean eliminarArista(String origen, String destino) {
+        Vertice vOrigen = buscarVertice(origen);
+        if (vOrigen == null) {
+            return false;
+        }
+        // Se busca la arista por medio de una lambda donde se compara el valor del vertice destino de la arista
+        boolean eliminada = vOrigen.getAristas().removeIf(
+                a -> a.getDestino().getDato().equalsIgnoreCase(destino));
+        if (eliminada) {
+            crearMatrizAdyacencia();
+        }
+        return eliminada;
+    }
+
 }

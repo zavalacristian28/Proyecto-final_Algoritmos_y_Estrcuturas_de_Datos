@@ -31,7 +31,8 @@ public class Fondo {
     private VBox panelControladores;
 
     // ComboBox
-    private ComboBox<String> cargaCSV;
+    private static ComboBox<String> cargaCSV;
+    private static ComboBox<String> operacionesModificables;
 
     public Fondo() {
 
@@ -125,11 +126,18 @@ public class Fondo {
         Label lblCsv = new Label("Gestion de Archivos CSV");
         lblCsv.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
+        /*
+            Declaracion de los comboBox utilizados en la interfaz
+         */
         cargaCSV = new ComboBox<>();
         cargaCSV.getItems().addAll(
                 "CSV20.csv",
                 "CSV100.csv",
                 "CSV500.csv"
+        );
+        operacionesModificables= new ComboBox<>();
+        operacionesModificables.getItems().addAll(
+                "Modificar peso", "Modificar valor del vertice","Eliminar vertice","Eliminar arista"
         );
 
         cargaCSV.setPromptText("Selecciona un archivo CSV");
@@ -219,5 +227,14 @@ public class Fondo {
 
     public static void ReiniciarBotonExportar() {
         botonExportarPresionado = false;
+    }
+    public static void añadirValorAlComboBox(String nombre){
+        cargaCSV.getItems().add(nombre);
+    }
+    public static String valorComboBox(){
+        return instancia.cargaCSV.getValue();
+    }
+    public static String valorComboBoxOpModificables(){
+        return instancia.operacionesModificables.getValue();
     }
 }

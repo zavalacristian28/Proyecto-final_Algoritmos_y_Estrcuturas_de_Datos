@@ -1,14 +1,18 @@
 package Logica;
 
+import com.example.proyecto.Labels;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Archivo {
-    private String rutaArchivo;
+    private static String rutaArchivo;
 
-    public Grafo cargarArchivo(int num){
-        rutaArchivo="C:/Users/Zaval/IdeaProjects/Proyecto/Proyecto/src/main/resources/com/example/proyecto/CSV"+num+".csv";
+    public static Grafo cargarArchivo(String nombre){
+        rutaArchivo="C:/Users/Zaval/IdeaProjects/Proyecto/Proyecto/src/main/resources/com/example/proyecto/CSV"+nombre+".csv";
         Grafo grafo=new Grafo(true);
         int idArista=0;
         try(BufferedReader bf=new BufferedReader(new FileReader(rutaArchivo))){
@@ -58,5 +62,27 @@ public class Archivo {
         return grafo;
     }
 
+    public static void guardarGrafoEnArchivo(Grafo grafo,String nombre){
+        String nombreArchivo=nombre+".csv";
 
+        try(FileWriter fw=new FileWriter(nombreArchivo)){
+
+            fw.write("origen,destino,peso\n");
+            //Recorremos todos los vertices del grafo
+            for (Vertice v : grafo.getVertices()) {
+                //Recorremos todas las aristas de cada vertice
+                for (Arista a : v.getAristas()) {
+
+                    fw.write(a.getOrigen().getDato() + "," +
+                            a.getDestino().getDato() + "," +
+                            a.getPeso() + "\n"
+                    );
+                }
+            }
+            Labels.texto("Grafo guardado correctamente");
+
+        }catch (IOException e){
+            Labels.texto("Error al guardar el grafo en el archivo");
+        }
+    }
 }

@@ -19,7 +19,8 @@ public class AccionesConElGrafo {
 
     public Grafo crearGrafo(){
 
-        String nombreGrafo;
+        //Se usa el campo del nombre del grafo para crear el nombre del archivo que tendra el grafo
+        String nombreGrafo=Fondo.valorTxtNombreGrafo();
         int idArista=0;
         Grafo grafo=new Grafo(true);
         while(Fondo.BotonExportarPresionado()) {
@@ -52,10 +53,58 @@ public class AccionesConElGrafo {
 
             idArista++;
         }
+
+        Archivo.guardarGrafoEnArchivo(grafo,nombreGrafo);
+        Fondo.añadirValorAlComboBox(nombreGrafo);
+
     return grafo;
     }
 
     public void modificarGrafo(Grafo grafo){
+        String nombreACargar=Fondo.valorComboBox();
+        Grafo grafoCargado=Archivo.cargarArchivo(nombreACargar);
 
+        String operacionAEjecutar=Fondo.valorComboBoxOpModificables();
+        switch (operacionAEjecutar){
+            case "Modificar peso":
+                    String vOrigen=Fondo.valorTxtOrigen();
+                    String vDestino=Fondo.valorTxtDestino();
+                    String textoPeso=Fondo.valorTxtPeso();
+                    int peso=Integer.parseInt(textoPeso);
+                    if(grafoCargado.modificarPeso(vOrigen,vDestino,peso)){
+                        Labels.texto("Peso modificado corrctamente");
+                    }else{
+                        Labels.texto("No se pudo actualizar el peso");
+                    }
+                break;
+
+            case "Modificar valor del vertice":
+                    String nombreVOrigen=Fondo.valorTxtOrigen();
+                    String nuevoNombreVOrigen=Fondo.valorTxtDestino();
+                    if(grafoCargado.modificarVertice(nombreVOrigen,nuevoNombreVOrigen)){
+                        Labels.texto("Vertice modificado correctamente");
+                    }else{
+                        Labels.texto("No se pudo actualizar el vertice");
+                    }
+                break;
+            case "Eliminar vertice":
+                    String nombreVEliminar=Fondo.valorTxtOrigen();
+                    if(grafoCargado.eliminarVertice(nombreVEliminar)){
+                        Labels.texto("Vertice eliminado correctamente");
+                    }else{
+                        Labels.texto("No se pudo eliminar el vertice");
+                    }
+                break;
+            case "Eliminar arista":
+                    String nombreVorigen=Fondo.valorTxtOrigen();
+                    String nombreVdestino=Fondo.valorTxtDestino();
+                    if(grafoCargado.eliminarArista(nombreVorigen,nombreVdestino)){
+                        Labels.texto("Arista eliminada correctamente");
+                    }else{
+                        Labels.texto("No se pudo eliminar la arista");
+                    }
+                break;
+        }
+        Archivo.guardarGrafoEnArchivo(grafoCargado,nombreACargar);
     }
 }

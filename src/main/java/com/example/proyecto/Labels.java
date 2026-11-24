@@ -18,7 +18,4 @@ public class Labels {
         crearLabel(texto);
     }
 
-    public void mensajeError(){
-        String texto=texto();
-    }
 }
