@@ -36,6 +36,7 @@ public class Fondo {
 
     // Grafo que se esta mostrando actualmente en el lienzo
     private Grafo grafoActual;
+    private CheckBox checkBoxDirigido;
 
     // ComboBox
     private static ComboBox<String> cargaCSV;
@@ -72,7 +73,11 @@ public class Fondo {
         Label lblManual = new Label("Construccion manual del grafo");
         lblManual.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
-        CheckBox checkBoxDirigido = new CheckBox("Grafo Dirigido");
+        checkBoxDirigido = new CheckBox("Grafo Dirigido");
+        checkBoxDirigido.setOnAction(event -> cambiarTipoGrafo());
+
+        // Grafo vacio con el que se empieza a trabajar
+        grafoActual = new Grafo(checkBoxDirigido.isSelected());
 
         textFieldVertice = new TextField();
         textFieldVertice.setPromptText("Nombre de la ubicacion del vertice");
@@ -166,6 +171,7 @@ public class Fondo {
         });
 
         btnCargarCsv.setOnAction(event -> cargarCsvSeleccionado());
+        btnLimpiarGrafo.setOnAction(event -> limpiarLienzo());
 
         HBox filaCsv = new HBox(8);
         filaCsv.getChildren().addAll(
@@ -224,7 +230,26 @@ public class Fondo {
         }
 
         grafoActual = Archivo.cargarArchivo(nombreArchivo);
+        checkBoxDirigido.setSelected(grafoActual.isDirigido());
         DibujoGrafo.dibujar(lienzoGrafo, grafoActual);
+    }
+
+    // Borra el dibujo y empieza con un grafo vacio del tipo que indique el checkBox
+    private void limpiarLienzo() {
+        lienzoGrafo.getChildren().clear();
+        grafoActual = new Grafo(checkBoxDirigido.isSelected());
+    }
+
+        // El tipo de grafo solo se puede cambiar cuando esta vacío,
+        // si ya tiene vertices se regresa el checkBox a su valor anterior
+
+    private void cambiarTipoGrafo() {
+        if (grafoActual.getVertices().isEmpty()) {
+            grafoActual = new Grafo(checkBoxDirigido.isSelected());
+        } else {
+            checkBoxDirigido.setSelected(grafoActual.isDirigido());
+            Labels.texto("Limpia el lienzo para cambiar el tipo de grafo");
+        }
     }
 
     public static String valorTxtOrigen() {
