@@ -13,9 +13,9 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-    // Clase encargada de dibujar un grafo dentro del lienzo (Pane) de la interfaz.
-    // Los vertices se acomodan en forma de elipse y las aristas se dibujan como lineas
-    // (con flecha si el grafo es dirigido).
+   // Clase encargada de dibujar un grafo dentro del lienzo (Pane) de la interfaz.
+   // Los vertices se acomodan en forma de elipse y las aristas se dibujan como lineas
+   // (con flecha si el grafo es dirigido).
 public class DibujoGrafo {
 
     // Si el grafo tiene mas vertices que esto, ya no se escriben los nombres sobre el lienzo
@@ -87,6 +87,10 @@ public class DibujoGrafo {
                 if (j == -1) {
                     continue;
                 }
+                //En un grafo no dirigido la conexion existe en los dos sentidos, solo se dibuja una vez
+                if (!grafo.isDirigido() && i > j && tieneArista(a.getDestino(), origen)) {
+                    continue;
+                }
                 dibujarArista(lienzo, posX[i], posY[i], posX[j], posY[j], radioVertice,
                         origen.getDato(), a.getDestino().getDato(), a.getPeso(),
                         grafo.isDirigido(), mostrarPesos, n > MAX_VERTICES_CON_NOMBRE);
@@ -100,6 +104,16 @@ public class DibujoGrafo {
             dibujarVertice(lienzo, posX[i], posY[i], radioVertice,
                     vertices.get(i).getDato(), mostrarNombres, dirX, dirY);
         }
+    }
+
+    //Indica si el vertice "desde" tiene una arista que llega al vertice "hacia"
+    private static boolean tieneArista(Vertice desde, Vertice hacia) {
+        for (Arista a : desde.getAristas()) {
+            if (a.getDestino() == hacia) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void dibujarArista(Pane lienzo, double x1, double y1, double x2, double y2,
@@ -130,7 +144,8 @@ public class DibujoGrafo {
             linea.setStrokeWidth(1.5);
         }
         lienzo.getChildren().add(linea);
-        Tooltip.install(linea, new Tooltip(origen + " -> " + destino + " (" + peso + ")"));
+        String separador = dirigido ? " -> " : " - ";
+        Tooltip.install(linea, new Tooltip(origen + separador + destino + " (" + peso + ")"));
 
         if (dirigido) {
             double largo = grafoGrande ? 6 : 11;

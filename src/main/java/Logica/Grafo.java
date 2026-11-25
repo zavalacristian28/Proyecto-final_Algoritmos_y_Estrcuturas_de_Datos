@@ -26,6 +26,20 @@ public class Grafo {
         return dirigido;
     }
 
+    //Metodo para saber si ya existe una arista entre dos vertices (del origen hacia el destino)
+    public boolean existeArista(String origen, String destino) {
+        Vertice vOrigen = buscarVertice(origen);
+        if (vOrigen == null) {
+            return false;
+        }
+        for (Arista a : vOrigen.getAristas()) {
+            if (a.getDestino().getDato().equalsIgnoreCase(destino)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Vertice buscarVertice(String dato) {
         for (Vertice v : vertices) {
             if (v.getDato().equalsIgnoreCase(dato)) {

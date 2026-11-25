@@ -172,6 +172,8 @@ public class Fondo {
 
         btnCargarCsv.setOnAction(event -> cargarCsvSeleccionado());
         btnLimpiarGrafo.setOnAction(event -> limpiarLienzo());
+        btnAgregarVertice.setOnAction(event -> agregarVertice());
+        btnAgregarArista.setOnAction(event -> conectarUbicaciones());
 
         HBox filaCsv = new HBox(8);
         filaCsv.getChildren().addAll(
@@ -234,15 +236,88 @@ public class Fondo {
         DibujoGrafo.dibujar(lienzoGrafo, grafoActual);
     }
 
+    // Agrega al grafo el vertice escrito en el campo de texto y lo dibuja
+    private void agregarVertice() {
+        String nombre = textFieldVertice.getText().trim();
+
+        if (nombre.isEmpty()) {
+            Labels.texto("Escribe el nombre del vertice");
+            return;
+        }
+        if (grafoActual.buscarVertice(nombre) != null) {
+            Labels.texto("Ya existe un vertice con ese nombre");
+            return;
+        }
+
+        grafoActual.obtenerOCrearVertice(nombre);
+        textFieldVertice.clear();
+        DibujoGrafo.dibujar(lienzoGrafo, grafoActual);
+        Labels.texto("Vertice agregado correctamente");
+    }
+
+    // Crea una arista entre los vertices escritos en origen y destino con el peso indicado
+    private void conectarUbicaciones() {
+        String origen = txtOrigen.getText().trim();
+        String destino = txtDestino.getText().trim();
+        String textoPeso = txtPeso.getText().trim();
+
+        if (origen.isEmpty() || destino.isEmpty()) {
+            Labels.texto("Escribe el vertice origen y el vertice destino");
+            return;
+        }
+        if (origen.equalsIgnoreCase(destino)) {
+            Labels.texto("El vertice de destino no puede ser igual al de origen");
+            return;
+        }
+
+        int peso;
+        try {
+            peso = Integer.parseInt(textoPeso);
+        } catch (NumberFormatException e) {
+            Labels.texto("El peso debe ser un numero entero");
+            return;
+        }
+        //El peso 0 no se permite porque en la matriz de adyacencia el 0 significa que no hay conexion
+        if (peso <= 0) {
+            Labels.texto("El peso debe ser mayor a 0");
+            return;
+        }
+
+        if (grafoActual.existeArista(origen, destino)) {
+            Labels.texto("Ya existe una conexion entre esos vertices, usa Editar Conexion");
+            return;
+        }
+
+        int idArista = siguienteIdArista();
+        grafoActual.agregarArista(idArista, origen, destino, peso);
+        //En un grafo no dirigido la conexion tambien existe de regreso
+        if (!grafoActual.isDirigido()) {
+            grafoActual.agregarArista(idArista + 1, destino, origen, peso);
+        }
+
+        txtOrigen.clear();
+        txtDestino.clear();
+        txtPeso.clear();
+        DibujoGrafo.dibujar(lienzoGrafo, grafoActual);
+        Labels.texto("Conexion agregada correctamente");
+    }
+
+    // El id de la nueva arista es la cantidad de aristas que ya tiene el grafo
+    private int siguienteIdArista() {
+        int cantidad = 0;
+        for (Vertice v : grafoActual.getVertices()) {
+            cantidad += v.getAristas().size();
+        }
+        return cantidad;
+    }
+
     // Borra el dibujo y empieza con un grafo vacio del tipo que indique el checkBox
     private void limpiarLienzo() {
         lienzoGrafo.getChildren().clear();
         grafoActual = new Grafo(checkBoxDirigido.isSelected());
     }
-
         // El tipo de grafo solo se puede cambiar cuando esta vacío,
         // si ya tiene vertices se regresa el checkBox a su valor anterior
-
     private void cambiarTipoGrafo() {
         if (grafoActual.getVertices().isEmpty()) {
             grafoActual = new Grafo(checkBoxDirigido.isSelected());
@@ -302,5 +377,4 @@ public class Fondo {
             verticesDestino.getItems().add(v.getDato());
         }
     }
-
 }
