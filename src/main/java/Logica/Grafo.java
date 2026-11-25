@@ -117,6 +117,46 @@ public class Grafo {
         }
     }
 
+    // Métodos añadidos para poder mostrar la matriz y la lista de adyacencia en la interfaz (en lugar de la consola)
+    public String matrizAdyacenciaComoTexto() {
+        crearMatrizAdyacencia();
+        StringBuilder texto = new StringBuilder();
+
+        //Como los nombres pueden ser largos, la matriz usa el id de cada vertice
+        texto.append("Vertices:\n");
+        for (Vertice v : vertices) {
+            texto.append(v.getId_Vertice()).append(" = ").append(v.getDato()).append("\n");
+        }
+
+        texto.append("\nMatriz de adyacencia:\n\t");
+        for (Vertice v : vertices) {
+            texto.append(v.getId_Vertice()).append("\t");
+        }
+        texto.append("\n");
+
+        for (int i = 0; i < matrizAdyacencia.length; i++) {
+            texto.append(i).append("\t");
+            for (int j = 0; j < matrizAdyacencia[i].length; j++) {
+                texto.append((int) matrizAdyacencia[i][j]).append("\t");
+            }
+            texto.append("\n");
+        }
+        return texto.toString();
+    }
+
+    public String listaAdyacenciaComoTexto() {
+        StringBuilder texto = new StringBuilder();
+        for (Vertice v : vertices) {
+            texto.append(v.getDato()).append(" -> ");
+            for (Arista a : v.getAristas()) {
+                texto.append(a.getDestino().getDato())
+                        .append("(").append(a.getPeso()).append(") ");
+            }
+            texto.append("\n");
+        }
+        return texto.toString();
+    }
+
     //Metodo añadido para poder actualizar el peso cuando se modifica un grafo
     public boolean modificarPeso(String origen, String destino, int nuevoPeso) {
         if (nuevoPeso < 0) {
