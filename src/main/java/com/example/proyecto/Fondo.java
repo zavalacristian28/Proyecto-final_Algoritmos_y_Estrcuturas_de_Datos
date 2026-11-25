@@ -1,6 +1,6 @@
-
 package com.example.proyecto;
 
+import Logica.Archivo;
 import Logica.Grafo;
 import Logica.Vertice;
 import javafx.geometry.Insets;
@@ -33,6 +33,9 @@ public class Fondo {
     private BorderPane panelPrincipal;
     private Pane lienzoGrafo;
     private VBox panelControladores;
+
+    // Grafo que se esta mostrando actualmente en el lienzo
+    private Grafo grafoActual;
 
     // ComboBox
     private static ComboBox<String> cargaCSV;
@@ -162,6 +165,8 @@ public class Fondo {
             botonExportarPresionado = true;
         });
 
+        btnCargarCsv.setOnAction(event -> cargarCsvSeleccionado());
+
         HBox filaCsv = new HBox(8);
         filaCsv.getChildren().addAll(
                 btnCargarCsv,
@@ -208,6 +213,18 @@ public class Fondo {
 
     public BorderPane getPanel() {
         return panelPrincipal;
+    }
+
+    // Carga el CSV elegido en el comboBox y dibuja el grafo en el lienzo
+    private void cargarCsvSeleccionado() {
+        String nombreArchivo = cargaCSV.getValue();
+        if (nombreArchivo == null) {
+            Labels.texto("Selecciona un archivo CSV");
+            return;
+        }
+
+        grafoActual = Archivo.cargarArchivo(nombreArchivo);
+        DibujoGrafo.dibujar(lienzoGrafo, grafoActual);
     }
 
     public static String valorTxtOrigen() {

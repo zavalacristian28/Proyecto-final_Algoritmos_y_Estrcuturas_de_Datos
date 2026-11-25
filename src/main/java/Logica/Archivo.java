@@ -7,17 +7,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class Archivo {
     private static String rutaArchivo;
 
     public static Grafo cargarArchivo(String nombre){
-        rutaArchivo="C:/Users/Zaval/IdeaProjects/Proyecto/Proyecto/src/main/resources/com/example/proyecto/CSV"+nombre+".csv";
         Grafo grafo=new Grafo(true);
         int idArista=0;
         int numVertices=0;
         int numAristas=0;
-        try(BufferedReader bf=new BufferedReader(new FileReader(rutaArchivo))){
+        try(BufferedReader bf=abrirArchivo(nombre)){
             String linea;
             bf.readLine();
             while((linea=bf.readLine())!=null){
@@ -66,6 +68,20 @@ public class Archivo {
             System.out.println("Error al cargar");
         }
         return grafo;
+    }
+
+    // Abre el archivo CSV a leer.
+    private static BufferedReader abrirArchivo(String nombre) throws IOException {
+        String nombreArchivo = nombre.endsWith(".csv") ? nombre : nombre + ".csv";
+
+        rutaArchivo = "/com/example/proyecto/" + nombreArchivo;
+        InputStream entrada = Archivo.class.getResourceAsStream(rutaArchivo);
+        if (entrada != null) {
+            return new BufferedReader(new InputStreamReader(entrada, StandardCharsets.UTF_8));
+        }
+
+        rutaArchivo = nombreArchivo;
+        return new BufferedReader(new FileReader(rutaArchivo));
     }
 
     public static void guardarGrafoEnArchivo(Grafo grafo,String nombre){

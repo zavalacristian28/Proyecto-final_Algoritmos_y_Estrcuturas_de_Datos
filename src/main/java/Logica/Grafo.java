@@ -22,6 +22,10 @@ public class Grafo {
         return vertices;
     }
 
+    public boolean isDirigido(){
+        return dirigido;
+    }
+
     public Vertice buscarVertice(String dato) {
         for (Vertice v : vertices) {
             if (v.getDato().equalsIgnoreCase(dato)) {
