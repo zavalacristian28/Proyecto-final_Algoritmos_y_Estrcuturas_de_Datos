@@ -222,17 +222,12 @@ public class AccionesConElGrafo {
         return cantidad;
     }
     public static Resultados medirCargaArchivo(String nombreArchivo) {
-
         long tiempoInicial = System.nanoTime();
-
         Grafo grafo = Archivo.cargarArchivo(nombreArchivo);
-
         long tiempoFinal = System.nanoTime();
-
         double tiempoMS = (tiempoFinal - tiempoInicial) / 1_000_000.0;
-
-        return new Resultados("Carga CSV: " + nombreArchivo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo)
-        );
+        return new Resultados("Carga CSV: " + nombreArchivo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
     }
+
 }
 
