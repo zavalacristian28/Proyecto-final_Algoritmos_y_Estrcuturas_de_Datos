@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class Fondo {
@@ -79,7 +80,7 @@ public class Fondo {
         panelControladores.setPrefWidth(265);
         panelControladores.setStyle("-fx-background-color: #ecf0f1;");
 
-        // CONSTRUCCION MANUAL Y EDICION
+        // 1. CONSTRUCCION MANUAL Y EDICION
         Label lblManual = new Label("Construccion manual del grafo");
         lblManual.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
@@ -134,7 +135,7 @@ public class Fondo {
                 btnEliminarArista
         );
 
-        // OPCIONES DE VISUALIZACION DEL GRAFO
+        // 2. OPCIONES DE VISUALIZACION DEL GRAFO
         Label lblOpciones = new Label("Opciones del Grafo");
         lblOpciones.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
@@ -147,7 +148,7 @@ public class Fondo {
         Button btnLimpiarGrafo = new Button("Limpiar Lienzo");
         btnLimpiarGrafo.setMaxWidth(Double.MAX_VALUE);
 
-        // GESTION DE ARCHIVOS CSV
+        // 3. GESTION DE ARCHIVOS CSV
         Label lblCsv = new Label("Gestion de Archivos CSV");
         lblCsv.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
@@ -177,7 +178,7 @@ public class Fondo {
                 btnExportarCsv
         );
 
-        // ALGORITMOS DE BUSQUEDA Y RUTA OPTIMA
+        // 4. ALGORITMOS DE BUSQUEDA Y RUTA OPTIMA
         Label lblBusqueda = new Label("Busqueda y Ruta Optima");
         lblBusqueda.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
@@ -200,12 +201,12 @@ public class Fondo {
         Button btnDijkstra = new Button("Ruta Optima (Dijkstra)");
         btnDijkstra.setMaxWidth(Double.MAX_VALUE);
 
-        //  ALGORITMOS DE ORDENAMIENTO
+        // 5. ALGORITMOS DE ORDENAMIENTO
         Label lblOrdenamiento = new Label("Ordenar Conexiones");
         lblOrdenamiento.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
         comboCriterioOrden = new ComboBox<>();
-        comboCriterioOrden.getItems().addAll("Por Nombre de Vertice");
+        comboCriterioOrden.getItems().addAll("Por Peso de Arista", "Por Nombre de Vertice");
         comboCriterioOrden.setPromptText("Criterio de ordenamiento");
         comboCriterioOrden.setMaxWidth(Double.MAX_VALUE);
 
@@ -578,7 +579,7 @@ public class Fondo {
         }
     }
 
-    // ALGORITMOS DE BUSQUEDA Y RUTA OPTIMA
+    // --- ALGORITMOS DE BUSQUEDA Y RUTA OPTIMA ---
 
     private void ejecutarBFS() {
         if (grafoActual.getVertices().isEmpty()) {
@@ -638,10 +639,15 @@ public class Fondo {
             return;
         }
 
-        String resultado = algoritmo.equals("QuickSort")
-                ? AccionesConElGrafo.ordenarQuicksort(grafoActual)
-                : AccionesConElGrafo.ordenarShell(grafoActual);
-        mostrarVentanaTexto("Ordenamiento (" + algoritmo + ")", resultado);
+        if (criterio.equals("Por Nombre de Vertice")) {
+            String resultado = algoritmo.equals("QuickSort")
+                    ? AccionesConElGrafo.ordenarQuicksort(grafoActual)
+                    : AccionesConElGrafo.ordenarShell(grafoActual);
+            mostrarVentanaTexto("Ordenamiento (" + algoritmo + ")", resultado);
+        } else {
+            String resultado = ordenarAristasPorPeso(grafoActual, algoritmo);
+            mostrarVentanaTexto("Conexiones por Peso (" + algoritmo + ")", resultado);
+        }
     }
 
     private String bfsSobreGrafo(Grafo grafo, int inicio) {
@@ -674,8 +680,92 @@ public class Fondo {
         return recorrido.toString();
     }
 
-    // Getters y metodos estaticos
+    private String ordenarAristasPorPeso(Grafo grafo, String algoritmo) {
+        ArrayList<Arista> listaAristas = new ArrayList<>();
+        for (Vertice v : grafo.getVertices()) {
+            listaAristas.addAll(v.getAristas());
+        }
+        Arista[] arreglo = listaAristas.toArray(new Arista[0]);
 
+        if (arreglo.length > 1) {
+            if (algoritmo.equals("QuickSort")) {
+                quickSortAristas(arreglo, 0, arreglo.length - 1);
+            } else {
+                shellSortAristas(arreglo);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder("Conexiones ordenadas por peso (" + algoritmo + "):\n\n");
+        for (Arista a : arreglo) {
+            sb.append(a.getOrigen().getDato())
+                    .append(" -> ")
+                    .append(a.getDestino().getDato())
+                    .append(" : ")
+                    .append(a.getPeso())
+                    .append("\n");
+        }
+        return sb.toString();
+    }
+
+    private void shellSortAristas(Arista[] a) {
+        int n = a.length;
+        int inter = n / 2;
+        while (inter > 0) {
+            boolean band = true;
+            while (band) {
+                band = false;
+                int i = 0;
+                while ((i + inter) < n) {
+                    if (a[i].getPeso() > a[i + inter].getPeso()) {
+                        Arista aux = a[i];
+                        a[i] = a[i + inter];
+                        a[i + inter] = aux;
+                        band = true;
+                    }
+                    i++;
+                }
+            }
+            inter = inter / 2;
+        }
+    }
+
+    private void quickSortAristas(Arista[] a, int ini, int fin) {
+        int izq = ini;
+        int der = fin;
+        int pos = ini;
+        boolean band = true;
+
+        while (band) {
+            band = false;
+            while (a[pos].getPeso() <= a[der].getPeso() && pos != der) {
+                der--;
+            }
+            if (pos != der) {
+                Arista aux = a[pos];
+                a[pos] = a[der];
+                a[der] = aux;
+                pos = der;
+                while (a[pos].getPeso() >= a[izq].getPeso() && pos != izq) {
+                    izq++;
+                }
+                if (pos != izq) {
+                    band = true;
+                    aux = a[pos];
+                    a[pos] = a[izq];
+                    a[izq] = aux;
+                    pos = izq;
+                }
+            }
+        }
+        if (ini < (pos - 1)) {
+            quickSortAristas(a, ini, pos - 1);
+        }
+        if ((pos + 1) < fin) {
+            quickSortAristas(a, pos + 1, fin);
+        }
+    }
+
+    // --- GETTERS Y METODOS ESTATICOS DE COMPATIBILIDAD ---
 
     public static String valorTxtOrigen() {
         return instancia.txtOrigen.getText();
