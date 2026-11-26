@@ -3,23 +3,12 @@ package Logica;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
-//Algoritmos de busqueda y ordenamiento
+// Algoritmos de busqueda y ordenamiento
 public class AlgoritmosBusOrd {
-
-    //posiblemente esto cause errores por ser static
-    private static Grafo grafo;
-
-    public AlgoritmosBusOrd(){
-        grafo=new Grafo();
-    }
-    /*
-    Algoritmos de ordenamiento solicitados:
-    Shell sort y QuickSort, implementaciones
-    en base a los algoritmos vistos en la clase
-     */
-    public static void shell(String a[], int n) {
+     // Algoritmos de ordenamiento solicitados
+     // Shell sort y QuickSort, implementaciones propias
+    public static void shell(String[] a, int n) {
         int inter = n / 2;
         boolean band;
         int i;
@@ -81,26 +70,25 @@ public class AlgoritmosBusOrd {
         }
     }
 
-    /*
-        Metodos de busqueda BFS y DFS
-     */
-    public static String BFS(int inicio) {
-        if (inicio < 0 || inicio >= grafo.getVertices().size()) {
+     // Metodos de busqueda BFS y DFS
+    public static String BFS(Grafo grafo, int inicio) {
+        if (grafo == null || inicio < 0 || inicio >= grafo.getVertices().size()) {
             return "Vertice inicial invalido";
         }
-        boolean[] visitados = new boolean[grafo.getVertices().size()];
-        ColaSimple<Integer> cola = new ColaSimple<>();
-        StringBuilder recorridos=new StringBuilder();
+        int n = grafo.getVertices().size();
+        boolean[] visitados = new boolean[n];
+        ColaSimple<Integer> cola = new ColaSimple<>(n);
+        StringBuilder recorridos = new StringBuilder();
+
         visitados[inicio] = true;
         cola.insertarDato(inicio);
 
-        while (cola.tamaño() != 0) {
+        while (!cola.estaVacia()) {
             int actual = cola.eliminarDato();
             String nombre = grafo.getVertices().get(actual).getDato();
             recorridos.append(nombre).append(" -> ");
 
-            ArrayList<Arista> aristasActuales =
-                    grafo.getVertices().get(actual).getAristas();
+            ArrayList<Arista> aristasActuales = grafo.getVertices().get(actual).getAristas();
             for (Arista arista : aristasActuales) {
                 int vecino = arista.getDestino().getId_Vertice();
                 if (!visitados[vecino]) {
@@ -109,29 +97,24 @@ public class AlgoritmosBusOrd {
                 }
             }
         }
-        if (recorridos.length() > 0) {
+        if (recorridos.length() >= 4) {
             recorridos.setLength(recorridos.length() - 4);
         }
         return recorridos.toString();
     }
 
-    /*
-        Adaptacion a este programa, principales cambios fueron que es metodo de tipo String, recibe un
-        grafo y se utilizo el StringBuilder
-     */
-
-    public static String DFS(Grafo grafo,int inicio) {
-        if (inicio < 0 || inicio >= grafo.getVertices().size()) {
+    public static String DFS(Grafo grafo, int inicio) {
+        if (grafo == null || inicio < 0 || inicio >= grafo.getVertices().size()) {
             return "Vertice inicial invalido";
         }
 
-        boolean[] visitados = new boolean[grafo.getVertices().size()];
-        Pila<Integer> pila = new Pila<>();
+        int n = grafo.getVertices().size();
+        boolean[] visitados = new boolean[n];
+        Pila<Integer> pila = new Pila<>(n * 2);
         StringBuilder recorrido = new StringBuilder();
         pila.push(inicio);
 
-        while (pila.longitudPila(pila) != 0) {
-
+        while (!pila.pilaVacia()) {
             int actual = pila.pop();
             if (!visitados[actual]) {
                 visitados[actual] = true;
@@ -148,13 +131,16 @@ public class AlgoritmosBusOrd {
                 }
             }
         }
-        if (recorrido.length() > 0) {
+        if (recorrido.length() >= 4) {
             recorrido.setLength(recorrido.length() - 4);
         }
         return recorrido.toString();
     }
 
-    public static String dijkstra(Grafo grafo, int inicio,int destino) {
+    public static String dijkstra(Grafo grafo, int inicio, int destino) {
+        if (grafo == null) {
+            return "No hay un grafo cargado";
+        }
         grafo.crearMatrizAdyacencia();
         double[][] matriz = grafo.getMatrizAdyacencia();
         int n = matriz.length;
@@ -162,41 +148,40 @@ public class AlgoritmosBusOrd {
             return "Vertice invalido";
         }
 
+        // Validar que no existan pesos negativos
+        for (Vertice v : grafo.getVertices()) {
+            for (Arista a : v.getAristas()) {
+                if (a.getPeso() < 0) {
+                    return "Error: Dijkstra no admite pesos negativos";
+                }
+            }
+        }
+
         double[] distancias = new double[n];
         boolean[] visitados = new boolean[n];
         int[] anteriores = new int[n];
-
-        //El Double Positive infinity genera un valor infinito para los demas vertices a excepcion del inicial
 
         Arrays.fill(distancias, Double.POSITIVE_INFINITY);
         Arrays.fill(anteriores, -1);
         distancias[inicio] = 0;
 
         for (int i = 0; i < n; i++) {
-
             int menor = -1;
-            // Buscar el nodo con menor distancia
             for (int j = 0; j < n; j++) {
-                if (!visitados[j] &&
-                        (menor == -1 || distancias[j] < distancias[menor])) {
+                if (!visitados[j] && (menor == -1 || distancias[j] < distancias[menor])) {
                     menor = j;
                 }
             }
-        //Double.isInfinite verifica si un valor es infinito todavia
+
             if (menor == -1 || Double.isInfinite(distancias[menor])) {
                 break;
             }
 
             visitados[menor] = true;
 
-            // Actualizar las distancias de sus vecinos
             for (int j = 0; j < n; j++) {
-
                 if (matriz[menor][j] > 0 && !visitados[j]) {
-
-                    int nuevaDistancia =
-                            (int) (distancias[menor] + matriz[menor][j]);
-
+                    double nuevaDistancia = distancias[menor] + matriz[menor][j];
                     if (nuevaDistancia < distancias[j]) {
                         distancias[j] = nuevaDistancia;
                         anteriores[j] = menor;
@@ -204,11 +189,13 @@ public class AlgoritmosBusOrd {
                 }
             }
         }
+
         if (Double.isInfinite(distancias[destino])) {
             return "No existe una ruta entre los vertices seleccionados";
         }
+
         ArrayList<Integer> ruta = new ArrayList<>();
-        int actual=destino;
+        int actual = destino;
         while (actual != -1) {
             ruta.add(actual);
             if (actual == inicio) {
@@ -222,32 +209,28 @@ public class AlgoritmosBusOrd {
         Collections.reverse(ruta);
 
         StringBuilder resultado = new StringBuilder();
-
         resultado.append("Vertice de origen: ")
                 .append(grafo.getVertices().get(inicio).getDato())
                 .append("\n");
-
         resultado.append("Vertice de destino: ")
                 .append(grafo.getVertices().get(destino).getDato())
                 .append("\n");
-
         resultado.append("Ruta: ");
 
         for (int i = 0; i < ruta.size(); i++) {
-
             int id = ruta.get(i);
-
             resultado.append(grafo.getVertices().get(id).getDato());
-
             if (i < ruta.size() - 1) {
                 resultado.append(" -> ");
             }
         }
 
-        resultado.append("\nCosto total: ")
-                .append((long) distancias[destino]);
+        double costo = distancias[destino];
+        String costoFormateado = (costo == Math.floor(costo))
+                ? String.valueOf((long) costo)
+                : String.format("%.2f", costo);
 
+        resultado.append("\nCosto total: ").append(costoFormateado);
         return resultado.toString();
     }
-
 }

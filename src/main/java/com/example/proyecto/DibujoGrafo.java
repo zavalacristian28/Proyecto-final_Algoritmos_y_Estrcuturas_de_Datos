@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-   // Clase encargada de dibujar un grafo dentro del lienzo (Pane) de la interfaz.
+   // Clase encargada de dibujar un grafo dentro del lienzo de la interfaz.
    // Los vertices se acomodan en forma de elipse y las aristas se dibujan como lineas
    // (con flecha si el grafo es dirigido).
 public class DibujoGrafo {

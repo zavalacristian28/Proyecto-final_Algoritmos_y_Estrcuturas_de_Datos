@@ -1,45 +1,57 @@
 package Logica;
 
-public class Pila <T>{
+public class Pila<T> {
 
-    private T [] pila;
-    private int tope=-1;
-    private int capacidad;
+    private T[] pila;
+    private int tope = -1;
 
-    public Pila(){
-        pila=(T[])new Object [10];
+    @SuppressWarnings("unchecked")
+    public Pila() {
+        pila = (T[]) new Object[100];
     }
-    public Pila(int capacidad){
-        this.capacidad = capacidad;
-        pila = (T[]) new Object[capacidad];
+
+    @SuppressWarnings("unchecked")
+    public Pila(int capacidad) {
+        int cap = Math.max(10, capacidad);
+        pila = (T[]) new Object[cap];
     }
-    public int getTope(){
+
+    @SuppressWarnings("unchecked")
+    private void ampliarCapacidad() {
+        T[] nuevaPila = (T[]) new Object[pila.length * 2];
+        System.arraycopy(pila, 0, nuevaPila, 0, pila.length);
+        pila = nuevaPila;
+    }
+
+    public int getTope() {
         return tope;
     }
-    public boolean pilaLlena( ){
-        return tope==pila.length -1;
-    }
-    public boolean pilaVacia(){
-        return tope==-1;
-    }
-    public void push(T dato){
-        if(pilaLlena()){
-            System.out.println("Desbordamiento");
-        }else{
-            tope++;
-            pila[tope]=dato;
-        }
+
+    public boolean pilaLlena() {
+        return tope == pila.length - 1;
     }
 
-    public T pop(){
-        if(pilaVacia()){
-            System.out.println("Sub desbordamiento");
-            return null;
-        }else{
-            T dato=pila[tope];
-            tope--;
-            return dato;
+    public boolean pilaVacia() {
+        return tope == -1;
+    }
+
+    public void push(T dato) {
+        if (pilaLlena()) {
+            ampliarCapacidad();
         }
+        tope++;
+        pila[tope] = dato;
+    }
+
+    public T pop() {
+        if (pilaVacia()) {
+            System.out.println("Subdesbordamiento");
+            return null;
+        }
+        T dato = pila[tope];
+        pila[tope] = null;
+        tope--;
+        return dato;
     }
 
     public static String invierteCadena(String cadena) {
@@ -47,27 +59,17 @@ public class Pila <T>{
             return null;
         }
         Pila<Character> p = new Pila<>(cadena.length());
-        String nuevaCadena = "";
+        StringBuilder nuevaCadena = new StringBuilder();
         for (int i = 0; i < cadena.length(); i++) {
             p.push(cadena.charAt(i));
         }
         while (!p.pilaVacia()) {
-            nuevaCadena += p.pop();
+            nuevaCadena.append(p.pop());
         }
-        return nuevaCadena;
+        return nuevaCadena.toString();
     }
 
-    public int longitudPila(Pila<Integer> pila){
-        int cont=0;
-        Pila<Integer> pilaAux=new Pila<>();
-        while(!pila.pilaVacia()){
-            pilaAux.push(pila.pop());
-            cont++;
-        }
-        for(int x=0;x<cont;x++){
-            pila.push(pilaAux.pop());
-        }
-
-        return cont;
+    public int longitudPila(Pila<T> pila) {
+        return pila.tope + 1;
     }
 }

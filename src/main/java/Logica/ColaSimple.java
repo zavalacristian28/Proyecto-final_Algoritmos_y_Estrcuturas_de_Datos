@@ -1,28 +1,38 @@
 package Logica;
 
-public class ColaSimple <T>{
+public class ColaSimple<T> {
 
-    private T [] cola;
-    private int fin=-1;
-    private int inicio=-1;
-    private int max=-1;
+    private T[] cola;
+    private int fin = -1;
+    private int inicio = -1;
 
-    public ColaSimple(){
-        cola=(T[])new Object [10];
+    @SuppressWarnings("unchecked")
+    public ColaSimple() {
+        cola = (T[]) new Object[100];
     }
 
-    public ColaSimple(int capacidad){
+    @SuppressWarnings("unchecked")
+    public ColaSimple(int capacidad) {
+        int cap = Math.max(10, capacidad);
+        cola = (T[]) new Object[cap];
+    }
 
-        cola=(T[])new Object[capacidad];
+    @SuppressWarnings("unchecked")
+    private void ampliarCapacidad() {
+        T[] nuevaCola = (T[]) new Object[cola.length * 2];
+        int count = tamaño();
+        for (int i = 0; i < count; i++) {
+            nuevaCola[i] = cola[inicio + i];
+        }
+        cola = nuevaCola;
+        inicio = (count > 0) ? 0 : -1;
+        fin = count - 1;
     }
 
     public void insertarDato(T dato) {
-        // Verificamos si la cola está llena
         if (fin == cola.length - 1) {
-            System.out.println("Desbordamiento");
-            return;
+            ampliarCapacidad();
         }
-        // Si es el primer elemento
         if (inicio == -1) {
             inicio = 0;
         }
@@ -31,7 +41,6 @@ public class ColaSimple <T>{
     }
 
     public T eliminarDato() {
-        // Verificamos si la cola está vacía
         if (inicio == -1) {
             System.out.println("Subdesbordamiento");
             return null;
@@ -39,7 +48,6 @@ public class ColaSimple <T>{
 
         T dato = cola[inicio];
 
-        // Si era el último elemento de la cola
         if (inicio == fin) {
             inicio = -1;
             fin = -1;
@@ -50,6 +58,10 @@ public class ColaSimple <T>{
             fin--;
         }
         return dato;
+    }
+
+    public boolean estaVacia() {
+        return inicio == -1;
     }
 
     public int tamaño() {
