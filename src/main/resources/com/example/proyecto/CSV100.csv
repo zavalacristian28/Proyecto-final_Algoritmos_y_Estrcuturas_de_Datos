@@ -1,101 +1,201 @@
 origen,destino,peso
-Mexicali,Tijuana,180
-Mexicali,Ensenada,250
-Mexicali,San Luis Rio Colorado,70
-Mexicali,Tecate,160
-Tijuana,Ensenada,110
-Tijuana,Tecate,45
-Tijuana,Rosarito,25
-Tijuana,San Diego,35
-Ensenada,Rosarito,85
-Ensenada,Tecate,130
-Ensenada,San Quintin,190
-Tecate,San Luis Rio Colorado,210
-Tecate,Rosarito,65
-Rosarito,San Quintin,240
-San Luis Rio Colorado,Puerto Penasco,100
-San Luis Rio Colorado,Hermosillo,290
-Hermosillo,Guaymas,135
-Hermosillo,Ciudad Obregon,250
-Hermosillo,Nogales,280
-Hermosillo,Cananea,160
-Guaymas,Ciudad Obregon,120
-Guaymas,Navojoa,190
-Ciudad Obregon,Navojoa,65
-Ciudad Obregon,Los Mochis,220
-Navojoa,Los Mochis,150
-Los Mochis,Culiacan,220
-Culiacan,Mazatlan,220
-Culiacan,Durango,450
-Mazatlan,Durango,300
-Mazatlan,Tepic,280
-Tepic,Guadalajara,210
-Tepic,Puerto Vallarta,165
-Guadalajara,Puerto Vallarta,330
-Guadalajara,Leon,220
-Guadalajara,Aguascalientes,220
-Guadalajara,Colima,190
-Leon,Aguascalientes,125
-Leon,Queretaro,170
-Leon,Guanajuato,55
-Guanajuato,Queretaro,115
-Queretaro,Ciudad de Mexico,220
-Queretaro,San Luis Potosi,205
-Queretaro,Morelia,180
-Ciudad de Mexico,Puebla,135
-Ciudad de Mexico,Cuernavaca,90
-Ciudad de Mexico,Toluca,65
-Ciudad de Mexico,Pachuca,100
-Ciudad de Mexico,Morelia,300
-Puebla,Veracruz,280
-Puebla,Oaxaca,340
-Puebla,Cuernavaca,150
-Veracruz,Xalapa,105
-Veracruz,Coatzacoalcos,165
-Xalapa,Poza Rica,150
-Oaxaca,Puerto Escondido,260
-Oaxaca,Tuxtla Gutierrez,540
-Tuxtla Gutierrez,San Cristobal de las Casas,85
-Tuxtla Gutierrez,Villahermosa,240
-Villahermosa,Campeche,390
-Villahermosa,Ciudad del Carmen,170
-Campeche,Merida,180
-Campeche,Cancun,480
-Merida,Cancun,305
-Merida,Valladolid,160
-Cancun,Playa del Carmen,70
-Cancun,Chetumal,380
-Playa del Carmen,Tulum,65
-Tulum,Chetumal,250
-San Luis Potosi,Zacatecas,190
-San Luis Potosi,Monterrey,510
-San Luis Potosi,Saltillo,430
-Zacatecas,Aguascalientes,120
-Zacatecas,Durango,290
-Durango,Torreon,250
-Torreon,Chihuahua,400
-Torreon,Monterrey,330
-Monterrey,Saltillo,85
-Monterrey,Reynosa,220
-Monterrey,Nuevo Laredo,220
-Monterrey,Chihuahua,620
-Saltillo,Chihuahua,550
-Reynosa,Matamoros,90
-Reynosa,Ciudad Victoria,300
-Matamoros,Ciudad Victoria,320
-Ciudad Victoria,Tampico,240
-Tampico,Poza Rica,230
-Chihuahua,Ciudad Juarez,360
-Chihuahua,Delicias,85
-Chihuahua,Parral,230
-Ciudad Juarez,Delicias,380
-Nogales,Cananea,110
-Nogales,Hermosillo,280
-Cananea,Agua Prieta,120
-Agua Prieta,Chihuahua,430
-Puerto Penasco,Sonoyta,100
-Sonoyta,Mexicali,250
-San Quintin,Ensenada,190
-Colima,Morelia,350
-Colima,Manzanillo,100
-Manzanillo,Puerto Vallarta,280
+Ubicacion_1,Ubicacion_2,245
+Ubicacion_2,Ubicacion_3,497
+Ubicacion_1,Ubicacion_4,371
+Ubicacion_4,Ubicacion_5,384
+Ubicacion_3,Ubicacion_6,231
+Ubicacion_5,Ubicacion_7,419
+Ubicacion_1,Ubicacion_8,282
+Ubicacion_2,Ubicacion_9,51
+Ubicacion_8,Ubicacion_10,144
+Ubicacion_1,Ubicacion_11,347
+Ubicacion_11,Ubicacion_12,494
+Ubicacion_4,Ubicacion_13,181
+Ubicacion_4,Ubicacion_14,168
+Ubicacion_14,Ubicacion_15,403
+Ubicacion_4,Ubicacion_16,101
+Ubicacion_5,Ubicacion_17,106
+Ubicacion_12,Ubicacion_18,199
+Ubicacion_14,Ubicacion_19,437
+Ubicacion_7,Ubicacion_20,216
+Ubicacion_15,Ubicacion_21,294
+Ubicacion_9,Ubicacion_22,471
+Ubicacion_13,Ubicacion_23,92
+Ubicacion_21,Ubicacion_24,336
+Ubicacion_4,Ubicacion_25,102
+Ubicacion_1,Ubicacion_26,318
+Ubicacion_13,Ubicacion_27,85
+Ubicacion_25,Ubicacion_28,445
+Ubicacion_19,Ubicacion_29,93
+Ubicacion_7,Ubicacion_30,95
+Ubicacion_27,Ubicacion_31,23
+Ubicacion_30,Ubicacion_32,350
+Ubicacion_16,Ubicacion_33,239
+Ubicacion_25,Ubicacion_34,74
+Ubicacion_4,Ubicacion_35,321
+Ubicacion_16,Ubicacion_36,377
+Ubicacion_33,Ubicacion_37,375
+Ubicacion_19,Ubicacion_38,363
+Ubicacion_38,Ubicacion_39,183
+Ubicacion_34,Ubicacion_40,359
+Ubicacion_22,Ubicacion_41,287
+Ubicacion_24,Ubicacion_42,257
+Ubicacion_26,Ubicacion_43,399
+Ubicacion_4,Ubicacion_44,426
+Ubicacion_7,Ubicacion_45,465
+Ubicacion_20,Ubicacion_46,343
+Ubicacion_28,Ubicacion_47,139
+Ubicacion_16,Ubicacion_48,443
+Ubicacion_46,Ubicacion_49,375
+Ubicacion_28,Ubicacion_50,402
+Ubicacion_33,Ubicacion_51,420
+Ubicacion_32,Ubicacion_52,471
+Ubicacion_38,Ubicacion_53,140
+Ubicacion_10,Ubicacion_54,39
+Ubicacion_44,Ubicacion_55,309
+Ubicacion_21,Ubicacion_56,94
+Ubicacion_4,Ubicacion_57,395
+Ubicacion_18,Ubicacion_58,371
+Ubicacion_45,Ubicacion_59,71
+Ubicacion_46,Ubicacion_60,35
+Ubicacion_51,Ubicacion_61,314
+Ubicacion_57,Ubicacion_62,122
+Ubicacion_57,Ubicacion_63,168
+Ubicacion_34,Ubicacion_64,328
+Ubicacion_28,Ubicacion_65,343
+Ubicacion_46,Ubicacion_66,180
+Ubicacion_59,Ubicacion_67,16
+Ubicacion_15,Ubicacion_68,253
+Ubicacion_25,Ubicacion_69,430
+Ubicacion_68,Ubicacion_70,70
+Ubicacion_27,Ubicacion_71,32
+Ubicacion_50,Ubicacion_72,381
+Ubicacion_14,Ubicacion_73,215
+Ubicacion_20,Ubicacion_74,326
+Ubicacion_62,Ubicacion_75,488
+Ubicacion_70,Ubicacion_76,29
+Ubicacion_57,Ubicacion_77,92
+Ubicacion_7,Ubicacion_78,418
+Ubicacion_61,Ubicacion_79,456
+Ubicacion_7,Ubicacion_80,111
+Ubicacion_32,Ubicacion_81,90
+Ubicacion_13,Ubicacion_82,29
+Ubicacion_18,Ubicacion_83,118
+Ubicacion_83,Ubicacion_84,56
+Ubicacion_16,Ubicacion_85,138
+Ubicacion_9,Ubicacion_86,362
+Ubicacion_52,Ubicacion_87,28
+Ubicacion_70,Ubicacion_88,228
+Ubicacion_61,Ubicacion_89,240
+Ubicacion_44,Ubicacion_90,366
+Ubicacion_59,Ubicacion_91,278
+Ubicacion_25,Ubicacion_92,320
+Ubicacion_75,Ubicacion_93,448
+Ubicacion_33,Ubicacion_94,223
+Ubicacion_19,Ubicacion_95,433
+Ubicacion_27,Ubicacion_96,434
+Ubicacion_53,Ubicacion_97,49
+Ubicacion_77,Ubicacion_98,147
+Ubicacion_52,Ubicacion_99,444
+Ubicacion_34,Ubicacion_100,440
+Ubicacion_91,Ubicacion_13,107
+Ubicacion_50,Ubicacion_35,11
+Ubicacion_35,Ubicacion_39,29
+Ubicacion_4,Ubicacion_72,160
+Ubicacion_30,Ubicacion_52,14
+Ubicacion_84,Ubicacion_11,122
+Ubicacion_39,Ubicacion_83,339
+Ubicacion_93,Ubicacion_81,21
+Ubicacion_12,Ubicacion_75,190
+Ubicacion_42,Ubicacion_87,466
+Ubicacion_57,Ubicacion_5,382
+Ubicacion_99,Ubicacion_24,473
+Ubicacion_11,Ubicacion_3,364
+Ubicacion_80,Ubicacion_46,443
+Ubicacion_71,Ubicacion_19,91
+Ubicacion_90,Ubicacion_1,359
+Ubicacion_95,Ubicacion_2,370
+Ubicacion_41,Ubicacion_65,212
+Ubicacion_23,Ubicacion_49,205
+Ubicacion_94,Ubicacion_58,110
+Ubicacion_28,Ubicacion_21,317
+Ubicacion_74,Ubicacion_71,483
+Ubicacion_35,Ubicacion_10,330
+Ubicacion_59,Ubicacion_82,392
+Ubicacion_18,Ubicacion_56,309
+Ubicacion_75,Ubicacion_65,66
+Ubicacion_84,Ubicacion_39,74
+Ubicacion_15,Ubicacion_75,325
+Ubicacion_29,Ubicacion_7,211
+Ubicacion_59,Ubicacion_56,372
+Ubicacion_45,Ubicacion_12,45
+Ubicacion_6,Ubicacion_57,223
+Ubicacion_3,Ubicacion_73,89
+Ubicacion_62,Ubicacion_14,362
+Ubicacion_12,Ubicacion_38,330
+Ubicacion_87,Ubicacion_13,294
+Ubicacion_73,Ubicacion_19,81
+Ubicacion_98,Ubicacion_71,309
+Ubicacion_19,Ubicacion_22,490
+Ubicacion_46,Ubicacion_95,299
+Ubicacion_49,Ubicacion_92,464
+Ubicacion_94,Ubicacion_14,340
+Ubicacion_63,Ubicacion_42,69
+Ubicacion_87,Ubicacion_61,478
+Ubicacion_37,Ubicacion_30,388
+Ubicacion_99,Ubicacion_100,485
+Ubicacion_45,Ubicacion_30,27
+Ubicacion_2,Ubicacion_29,269
+Ubicacion_15,Ubicacion_71,55
+Ubicacion_17,Ubicacion_61,333
+Ubicacion_7,Ubicacion_95,254
+Ubicacion_45,Ubicacion_66,254
+Ubicacion_27,Ubicacion_64,34
+Ubicacion_86,Ubicacion_65,311
+Ubicacion_33,Ubicacion_4,319
+Ubicacion_99,Ubicacion_14,362
+Ubicacion_24,Ubicacion_6,487
+Ubicacion_75,Ubicacion_91,129
+Ubicacion_60,Ubicacion_89,15
+Ubicacion_15,Ubicacion_29,197
+Ubicacion_42,Ubicacion_16,331
+Ubicacion_39,Ubicacion_14,166
+Ubicacion_40,Ubicacion_90,234
+Ubicacion_80,Ubicacion_25,176
+Ubicacion_12,Ubicacion_21,185
+Ubicacion_77,Ubicacion_99,341
+Ubicacion_80,Ubicacion_20,488
+Ubicacion_55,Ubicacion_11,54
+Ubicacion_41,Ubicacion_78,114
+Ubicacion_41,Ubicacion_35,88
+Ubicacion_86,Ubicacion_15,237
+Ubicacion_97,Ubicacion_3,114
+Ubicacion_67,Ubicacion_21,251
+Ubicacion_96,Ubicacion_77,442
+Ubicacion_85,Ubicacion_6,436
+Ubicacion_70,Ubicacion_57,189
+Ubicacion_64,Ubicacion_8,227
+Ubicacion_49,Ubicacion_20,109
+Ubicacion_56,Ubicacion_24,114
+Ubicacion_35,Ubicacion_33,121
+Ubicacion_38,Ubicacion_52,471
+Ubicacion_51,Ubicacion_34,180
+Ubicacion_4,Ubicacion_94,146
+Ubicacion_31,Ubicacion_67,100
+Ubicacion_7,Ubicacion_85,222
+Ubicacion_12,Ubicacion_93,190
+Ubicacion_16,Ubicacion_22,413
+Ubicacion_48,Ubicacion_28,406
+Ubicacion_85,Ubicacion_67,132
+Ubicacion_52,Ubicacion_3,248
+Ubicacion_44,Ubicacion_6,145
+Ubicacion_64,Ubicacion_77,35
+Ubicacion_10,Ubicacion_46,31
+Ubicacion_84,Ubicacion_34,407
+Ubicacion_75,Ubicacion_59,304
+Ubicacion_80,Ubicacion_93,440
+Ubicacion_37,Ubicacion_69,213
+Ubicacion_47,Ubicacion_42,90
+Ubicacion_17,Ubicacion_95,104
+Ubicacion_44,Ubicacion_64,406
+Ubicacion_52,Ubicacion_80,219

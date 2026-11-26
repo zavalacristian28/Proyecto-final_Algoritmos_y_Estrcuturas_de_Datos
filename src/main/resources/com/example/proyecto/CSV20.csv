@@ -1,21 +1,31 @@
 origen,destino,peso
-Biblioteca,Edificio de Ingenieria,120
-Biblioteca,Cafeteria,80
-Biblioteca,Edificio de Ciencias,150
-Biblioteca,Auditorio,200
-Edificio de Ingenieria,Edificio de Ciencias,90
-Edificio de Ingenieria,Laboratorios,60
-Edificio de Ingenieria,Edificio de Administracion,180
-Edificio de Ciencias,Laboratorios,75
-Edificio de Ciencias,Auditorio,110
-Edificio de Ciencias,Edificio de Medicina,220
-Laboratorios,Edificio de Medicina,130
-Laboratorios,Cafeteria,160
-Edificio de Medicina,Hospital Universitario,100
-Edificio de Medicina,Edificio de Administracion,190
-Hospital Universitario,Auditorio,250
-Hospital Universitario,Cafeteria,210
-Cafeteria,Edificio de Administracion,140
-Cafeteria,Gimnasio,170
-Gimnasio,Auditorio,95
-Edificio de Administracion,Biblioteca,160
+Ubicacion_1,Ubicacion_2,143
+Ubicacion_1,Ubicacion_3,456
+Ubicacion_2,Ubicacion_4,303
+Ubicacion_2,Ubicacion_5,23
+Ubicacion_4,Ubicacion_6,218
+Ubicacion_1,Ubicacion_7,62
+Ubicacion_2,Ubicacion_8,173
+Ubicacion_8,Ubicacion_9,496
+Ubicacion_8,Ubicacion_10,220
+Ubicacion_4,Ubicacion_11,112
+Ubicacion_6,Ubicacion_12,330
+Ubicacion_11,Ubicacion_13,181
+Ubicacion_6,Ubicacion_14,228
+Ubicacion_2,Ubicacion_15,331
+Ubicacion_9,Ubicacion_16,422
+Ubicacion_16,Ubicacion_17,217
+Ubicacion_3,Ubicacion_18,115
+Ubicacion_8,Ubicacion_19,27
+Ubicacion_7,Ubicacion_20,58
+Ubicacion_3,Ubicacion_7,139
+Ubicacion_9,Ubicacion_6,329
+Ubicacion_4,Ubicacion_1,146
+Ubicacion_20,Ubicacion_10,153
+Ubicacion_5,Ubicacion_11,317
+Ubicacion_15,Ubicacion_5,482
+Ubicacion_9,Ubicacion_18,436
+Ubicacion_6,Ubicacion_13,485
+Ubicacion_4,Ubicacion_5,409
+Ubicacion_19,Ubicacion_14,186
+Ubicacion_8,Ubicacion_4,474

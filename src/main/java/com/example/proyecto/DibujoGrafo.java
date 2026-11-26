@@ -13,9 +13,9 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-   // Clase encargada de dibujar un grafo dentro del lienzo de la interfaz.
-   // Los vertices se acomodan en forma de elipse y las aristas se dibujan como lineas
-   // (con flecha si el grafo es dirigido).
+// Clase encargada de dibujar un grafo dentro del lienzo de la interfaz.
+// Los vertices se acomodan en forma de elipse y las aristas se dibujan como lineas
+// (con flecha si el grafo es dirigido).
 public class DibujoGrafo {
 
     // Si el grafo tiene mas vertices que esto, ya no se escriben los nombres sobre el lienzo
@@ -34,7 +34,7 @@ public class DibujoGrafo {
             return;
         }
 
-        //Si el lienzo todavia no tiene tamaño se usan valores por defecto
+        // Si el lienzo todavia no tiene tamaño se usan valores por defecto
         double ancho = lienzo.getWidth();
         double alto = lienzo.getHeight();
         if (ancho <= 0) {
@@ -52,7 +52,7 @@ public class DibujoGrafo {
         }
         boolean mostrarPesos = totalAristas <= MAX_ARISTAS_CON_PESO;
 
-        //El tamaño de los vertices depende de cuantos haya
+        // El tamaño de los vertices depende de cuantos haya
         double radioVertice;
         if (n <= 15) {
             radioVertice = 16;
@@ -62,7 +62,7 @@ public class DibujoGrafo {
             radioVertice = 6;
         }
 
-        //Se deja margen para que los nombres no se salgan del lienzo
+        // Se deja margen para que los nombres no se salgan del lienzo
         double margenX = mostrarNombres ? 140 : 30;
         double margenY = mostrarNombres ? 50 : 30;
         double radioX = Math.max(ancho / 2 - margenX, 50);
@@ -70,7 +70,7 @@ public class DibujoGrafo {
         double centroX = ancho / 2;
         double centroY = alto / 2;
 
-        //Posicion de cada vertice, se reparten en la elipse empezando desde arriba
+        // Posicion de cada vertice, se reparten en la elipse empezando desde arriba
         double[] posX = new double[n];
         double[] posY = new double[n];
         for (int i = 0; i < n; i++) {
@@ -79,7 +79,7 @@ public class DibujoGrafo {
             posY[i] = centroY + radioY * Math.sin(angulo);
         }
 
-        //Primero las aristas, para que los vertices queden encima de ellas
+        // Primero las aristas, para que los vertices queden encima de ellas
         for (int i = 0; i < n; i++) {
             Vertice origen = vertices.get(i);
             for (Arista a : origen.getAristas()) {
@@ -87,7 +87,7 @@ public class DibujoGrafo {
                 if (j == -1) {
                     continue;
                 }
-                //En un grafo no dirigido la conexion existe en los dos sentidos, solo se dibuja una vez
+                // En un grafo no dirigido la conexion existe en los dos sentidos, solo se dibuja una vez
                 if (!grafo.isDirigido() && i > j && tieneArista(a.getDestino(), origen)) {
                     continue;
                 }
@@ -97,7 +97,7 @@ public class DibujoGrafo {
             }
         }
 
-        //Despues los vertices con su nombre
+        // Despues los vertices con su nombre
         for (int i = 0; i < n; i++) {
             double dirX = (posX[i] - centroX) / radioX;
             double dirY = (posY[i] - centroY) / radioY;
@@ -106,7 +106,7 @@ public class DibujoGrafo {
         }
     }
 
-    //Indica si el vertice "desde" tiene una arista que llega al vertice "hacia"
+    // Indica si el vertice "desde" tiene una arista que llega al vertice "hacia"
     private static boolean tieneArista(Vertice desde, Vertice hacia) {
         for (Arista a : desde.getAristas()) {
             if (a.getDestino() == hacia) {
@@ -127,7 +127,7 @@ public class DibujoGrafo {
             return;
         }
 
-        //Vector unitario, se usa para que la linea empiece y termine en el borde de los circulos
+        // Vector unitario, se usa para que la linea empiece y termine en el borde de los circulos
         double ux = dx / distancia;
         double uy = dy / distancia;
         double inicioX = x1 + ux * radioVertice;
@@ -137,10 +137,10 @@ public class DibujoGrafo {
 
         Line linea = new Line(inicioX, inicioY, finX, finY);
         if (grafoGrande) {
-            linea.setStroke(Color.web("#7f8c8d", 0.35));
+            linea.setStroke(Color.web("#7B8570", 0.35));
             linea.setStrokeWidth(0.8);
         } else {
-            linea.setStroke(Color.web("#7f8c8d"));
+            linea.setStroke(Color.web("#7B8570"));
             linea.setStrokeWidth(1.5);
         }
         lienzo.getChildren().add(linea);
@@ -151,7 +151,7 @@ public class DibujoGrafo {
             double largo = grafoGrande ? 6 : 11;
             double mitadAncho = grafoGrande ? 3 : 5;
 
-            //Centro de la base de la flecha y vector perpendicular a la linea
+            // Centro de la base de la flecha y vector perpendicular a la linea
             double baseX = finX - ux * largo;
             double baseY = finY - uy * largo;
             double perpX = -uy;
@@ -162,17 +162,17 @@ public class DibujoGrafo {
                     baseX + perpX * mitadAncho, baseY + perpY * mitadAncho,
                     baseX - perpX * mitadAncho, baseY - perpY * mitadAncho
             );
-            flecha.setFill(Color.web("#7f8c8d"));
+            flecha.setFill(Color.web("#4A5D3E"));
             lienzo.getChildren().add(flecha);
         }
 
         if (mostrarPeso) {
-            //En grafos dirigidos el peso se pone mas cerca del origen, asi no se encima con la arista contraria
+            // En grafos dirigidos el peso se pone mas cerca del origen, asi no se encima con la arista contraria
             double t = dirigido ? 0.35 : 0.5;
             Text textoPeso = new Text(String.valueOf(peso));
             textoPeso.setStyle("-fx-font-size: 11px; -fx-font-weight: bold;");
-            textoPeso.setFill(Color.web("#c0392b"));
-            //El + uy*6 y - ux*6 mueven el texto un poco hacia un lado de la linea
+            textoPeso.setFill(Color.web("#9E3B24"));
+            // El + uy*6 y - ux*6 mueven el texto un poco hacia un lado de la linea
             textoPeso.setX(inicioX + (finX - inicioX) * t + uy * 6);
             textoPeso.setY(inicioY + (finY - inicioY) * t - ux * 6);
             lienzo.getChildren().add(textoPeso);
@@ -183,30 +183,30 @@ public class DibujoGrafo {
                                        String nombre, boolean mostrarNombre, double dirX, double dirY) {
 
         Circle circulo = new Circle(x, y, radio);
-        circulo.setFill(Color.web("#3498db"));
-        circulo.setStroke(Color.web("#2c3e50"));
-        circulo.setStrokeWidth(1.5);
+        circulo.setFill(Color.web("#556B2F"));
+        circulo.setStroke(Color.web("#2E3B20"));
+        circulo.setStrokeWidth(1.8);
         lienzo.getChildren().add(circulo);
 
-        //Siempre se puede ver el nombre pasando el mouse sobre el vertice
+        // Siempre se puede ver el nombre pasando el mouse sobre el vertice
         Tooltip.install(circulo, new Tooltip(nombre));
 
         if (mostrarNombre) {
             Text etiqueta = new Text(nombre);
-            etiqueta.setStyle("-fx-font-size: 12px;");
-            etiqueta.setFill(Color.web("#2c3e50"));
+            etiqueta.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
+            etiqueta.setFill(Color.web("#2E3B20"));
             double anchoTexto = etiqueta.getLayoutBounds().getWidth();
 
-            //El nombre se coloca hacia afuera del grafo, segun el lado donde este el vertice
+            // El nombre se coloca hacia afuera del grafo, segun el lado donde este el vertice
             double etiquetaX = x + dirX * (radio + 6);
             double etiquetaY = y + dirY * (radio + 6) + 4;
             if (dirX > 0.3) {
-                //lado derecho, el texto empieza en el vertice
+                // Lado derecho, el texto empieza en el vertice
             } else if (dirX < -0.3) {
-                //lado izquierdo, el texto termina en el vertice
+                // Lado izquierdo, el texto termina en el vertice
                 etiquetaX = etiquetaX - anchoTexto;
             } else {
-                //arriba o abajo, el texto se centra
+                // Arriba o abajo, el texto se centra
                 etiquetaX = etiquetaX - anchoTexto / 2;
             }
             etiqueta.setX(etiquetaX);

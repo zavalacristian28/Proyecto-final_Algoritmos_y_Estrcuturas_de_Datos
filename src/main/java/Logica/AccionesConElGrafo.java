@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class AccionesConElGrafo {
+    // Numero de repeticiones usadas para promediar los tiempos del analisis empirico
+    private static final int REPETICIONES = 5;
+
     private ArrayList<Grafo> grafos;
 
     public AccionesConElGrafo() {
@@ -200,7 +203,19 @@ public class AccionesConElGrafo {
 
     public static Resultados medirTiempo(String metodo, Grafo grafo, int inicio, int destino) {
         Labels.setModoSilencioso(true);
-        long tiempoInicial = System.nanoTime();
+        long total = 0;
+        for (int r = 0; r < REPETICIONES; r++) {
+            long tiempoInicial = System.nanoTime();
+            ejecutarMetodo(metodo, grafo, inicio, destino);
+            total += System.nanoTime() - tiempoInicial;
+        }
+        Labels.setModoSilencioso(false);
+
+        double tiempoMS = (total / (double) REPETICIONES) / 1_000_000.0;
+        return new Resultados(metodo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
+    }
+
+    private static void ejecutarMetodo(String metodo, Grafo grafo, int inicio, int destino) {
         switch (metodo) {
             case "Quicksort Peso":
                 ordenarConexionesQuickSort(grafo, true);
@@ -230,11 +245,6 @@ public class AccionesConElGrafo {
                 AlgoritmosBusOrd.DFS(grafo, inicio);
                 break;
         }
-        long tiempoFinal = System.nanoTime();
-        Labels.setModoSilencioso(false);
-
-        double tiempoMS = (tiempoFinal - tiempoInicial) / 1_000_000.0;
-        return new Resultados(metodo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
     }
 
     public static int contarAristas(Grafo grafo) {
@@ -243,13 +253,16 @@ public class AccionesConElGrafo {
 
     public static Resultados medirCargaArchivo(String nombreArchivo) {
         Labels.setModoSilencioso(true);
-        long tiempoInicial = System.nanoTime();
-        Grafo grafo = Archivo.cargarArchivo(nombreArchivo);
-        long tiempoFinal = System.nanoTime();
+        long total = 0;
+        Grafo grafo = null;
+        for (int r = 0; r < REPETICIONES; r++) {
+            long tiempoInicial = System.nanoTime();
+            grafo = Archivo.cargarArchivo(nombreArchivo);
+            total += System.nanoTime() - tiempoInicial;
+        }
         Labels.setModoSilencioso(false);
 
-        double tiempoMS = (tiempoFinal - tiempoInicial) / 1_000_000.0;
+        double tiempoMS = (total / (double) REPETICIONES) / 1_000_000.0;
         return new Resultados("Carga CSV: " + nombreArchivo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
     }
 }
-

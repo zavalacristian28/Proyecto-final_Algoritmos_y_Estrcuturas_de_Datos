@@ -47,15 +47,14 @@ public class ColaSimple<T> {
         }
 
         T dato = cola[inicio];
+        cola[inicio] = null;
 
+        // Se avanza el indice de inicio en lugar de recorrer el arreglo: O(1)
         if (inicio == fin) {
             inicio = -1;
             fin = -1;
         } else {
-            for (int i = inicio; i < fin; i++) {
-                cola[i] = cola[i + 1];
-            }
-            fin--;
+            inicio++;
         }
         return dato;
     }

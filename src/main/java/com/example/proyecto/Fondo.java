@@ -55,35 +55,48 @@ public class Fondo {
     public Fondo() {
         instancia = this;
 
-        panelPrincipal = new BorderPane();
-        panelPrincipal.setStyle("-fx-background-color: #f4f6f9;");
+        // Paleta beige clarito elegante y marcos verde oliva
+        String beigeClaro = "#FAF7F0";
+        String beigeArena = "#EFE9DC";
+        String verdeOlivaMarco = "#556B2F";
+        String verdeOlivaOscuro = "#4A5D3E";
+        String textoOliva = "#364529";
 
-        // Barra superior
+        String estiloTituloSeccion = "-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: " + textoOliva + ";";
+        String estiloCampo = "-fx-background-color: " + beigeClaro + "; -fx-border-color: #8F9E7E; -fx-border-radius: 3; -fx-background-radius: 3;";
+        String estiloBoton = "-fx-background-color: #E3DCCB; -fx-border-color: " + verdeOlivaMarco + "; -fx-text-fill: " + textoOliva + "; -fx-border-radius: 3; -fx-background-radius: 3;";
+
+        panelPrincipal = new BorderPane();
+        panelPrincipal.setStyle("-fx-background-color: " + beigeClaro + "; -fx-border-color: " + verdeOlivaOscuro + "; -fx-border-width: 2;");
+
+        // Barra superior con marco verde oliva
         HBox barraSuperior = new HBox();
         barraSuperior.setPadding(new Insets(12, 15, 12, 15));
-        barraSuperior.setStyle("-fx-background-color: #2c3e50;");
+        barraSuperior.setStyle("-fx-background-color: " + verdeOlivaOscuro + "; -fx-border-color: #364529; -fx-border-width: 0 0 2 0;");
 
         Label titulo = new Label("Sistema de Gestion y Analisis de Grafos");
-        titulo.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
+        titulo.setStyle("-fx-text-fill: " + beigeClaro + "; -fx-font-size: 18px; -fx-font-weight: bold;");
         barraSuperior.getChildren().add(titulo);
 
-        // Panel izquierdo de controles
+        // Panel izquierdo de controles en beige arena
         panelControladores = new VBox(8);
         panelControladores.setPadding(new Insets(12));
         panelControladores.setPrefWidth(280);
-        panelControladores.setStyle("-fx-background-color: #ecf0f1;");
+        panelControladores.setStyle("-fx-background-color: " + beigeArena + ";");
 
         // Seccion 1: Construccion manual del grafo
         Label lblManual = new Label("1. Construccion del Grafo");
-        lblManual.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+        lblManual.setStyle(estiloTituloSeccion);
 
         checkBoxDirigido = new CheckBox("Grafo Dirigido");
+        checkBoxDirigido.setStyle("-fx-text-fill: " + textoOliva + "; -fx-font-weight: bold;");
         checkBoxDirigido.setOnAction(event -> cambiarTipoGrafo());
 
         grafoActual = new Grafo(checkBoxDirigido.isSelected());
 
         textFieldVertice = new TextField();
         textFieldVertice.setPromptText("Nombre del vertice");
+        textFieldVertice.setStyle(estiloCampo);
 
         Button btnAgregarVertice = new Button("Agregar");
         Button btnEditarVertice = new Button("Editar");
@@ -91,92 +104,112 @@ public class Fondo {
         btnAgregarVertice.setPrefWidth(80);
         btnEditarVertice.setPrefWidth(80);
         btnEliminarVertice.setPrefWidth(80);
+        btnAgregarVertice.setStyle(estiloBoton);
+        btnEditarVertice.setStyle(estiloBoton);
+        btnEliminarVertice.setStyle(estiloBoton);
 
         HBox filaBotonesVertice = new HBox(6);
         filaBotonesVertice.getChildren().addAll(btnAgregarVertice, btnEditarVertice, btnEliminarVertice);
 
         txtOrigen = new TextField();
         txtOrigen.setPromptText("Vertice Origen");
+        txtOrigen.setStyle(estiloCampo);
 
         txtDestino = new TextField();
         txtDestino.setPromptText("Vertice Destino");
+        txtDestino.setStyle(estiloCampo);
 
         txtPeso = new TextField();
         txtPeso.setPromptText("Peso (entero > 0)");
+        txtPeso.setStyle(estiloCampo);
 
         Button btnAgregarArista = new Button("Conectar Ubicaciones");
         btnAgregarArista.setMaxWidth(Double.MAX_VALUE);
+        btnAgregarArista.setStyle(estiloBoton);
 
         Button btnEditarArista = new Button("Editar Peso");
         Button btnEliminarArista = new Button("Eliminar Conexion");
         btnEditarArista.setPrefWidth(122);
         btnEliminarArista.setPrefWidth(122);
+        btnEditarArista.setStyle(estiloBoton);
+        btnEliminarArista.setStyle(estiloBoton);
 
         HBox filaBotonesArista = new HBox(6);
         filaBotonesArista.getChildren().addAll(btnEditarArista, btnEliminarArista);
 
         // Seccion 2: Algoritmos de busqueda y ruta optima
         Label lblAlgoritmos = new Label("2. Busqueda y Ruta Optima");
-        lblAlgoritmos.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+        lblAlgoritmos.setStyle(estiloTituloSeccion);
 
         verticesDelGrafo = new ComboBox<>();
         verticesDelGrafo.setPromptText("Vertice inicial / origen");
         verticesDelGrafo.setMaxWidth(Double.MAX_VALUE);
+        verticesDelGrafo.setStyle(estiloCampo);
 
         verticesDestino = new ComboBox<>();
         verticesDestino.setPromptText("Vertice destino (Dijkstra)");
         verticesDestino.setMaxWidth(Double.MAX_VALUE);
+        verticesDestino.setStyle(estiloCampo);
 
         Button btnBFS = new Button("BFS (Anchura)");
         Button btnDFS = new Button("DFS (Profundidad)");
         btnBFS.setPrefWidth(122);
         btnDFS.setPrefWidth(122);
+        btnBFS.setStyle(estiloBoton);
+        btnDFS.setStyle(estiloBoton);
 
         HBox filaBusquedas = new HBox(6);
         filaBusquedas.getChildren().addAll(btnBFS, btnDFS);
 
         Button btnDijkstra = new Button("Ruta Optima (Dijkstra)");
         btnDijkstra.setMaxWidth(Double.MAX_VALUE);
+        btnDijkstra.setStyle(estiloBoton);
 
         // Seccion 3: Algoritmos de ordenamiento
         Label lblOrdenamiento = new Label("3. Ordenar Conexiones");
-        lblOrdenamiento.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+        lblOrdenamiento.setStyle(estiloTituloSeccion);
 
         criterioOrdenamiento = new ComboBox<>();
         criterioOrdenamiento.getItems().addAll("Peso de las aristas", "Nombre de los vertices");
         criterioOrdenamiento.setValue("Peso de las aristas");
         criterioOrdenamiento.setMaxWidth(Double.MAX_VALUE);
+        criterioOrdenamiento.setStyle(estiloCampo);
 
         Button btnQuickSort = new Button("QuickSort");
         Button btnShellSort = new Button("Shell Sort");
         btnQuickSort.setPrefWidth(122);
         btnShellSort.setPrefWidth(122);
+        btnQuickSort.setStyle(estiloBoton);
+        btnShellSort.setStyle(estiloBoton);
 
         HBox filaOrdenamiento = new HBox(6);
         filaOrdenamiento.getChildren().addAll(btnQuickSort, btnShellSort);
 
         // Seccion 4: Estructuras y analisis
         Label lblOpciones = new Label("4. Estructuras y Analisis");
-        lblOpciones.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+        lblOpciones.setStyle(estiloTituloSeccion);
 
         Button btnMostrarMatriz = new Button("Matriz Adyacencia");
         Button btnMostrarLista = new Button("Lista Adyacencia");
         btnMostrarMatriz.setPrefWidth(122);
         btnMostrarLista.setPrefWidth(122);
+        btnMostrarMatriz.setStyle(estiloBoton);
+        btnMostrarLista.setStyle(estiloBoton);
 
         HBox filaEstructuras = new HBox(6);
         filaEstructuras.getChildren().addAll(btnMostrarMatriz, btnMostrarLista);
 
         Button btnAnalisisEmpirico = new Button("Analisis Empirico y Graficas");
         btnAnalisisEmpirico.setMaxWidth(Double.MAX_VALUE);
-        btnAnalisisEmpirico.setStyle("-fx-font-weight: bold;");
+        btnAnalisisEmpirico.setStyle("-fx-background-color: " + verdeOlivaMarco + "; -fx-text-fill: " + beigeClaro + "; -fx-font-weight: bold; -fx-border-color: #364529; -fx-border-radius: 3; -fx-background-radius: 3;");
 
         Button btnLimpiarGrafo = new Button("Limpiar Lienzo");
         btnLimpiarGrafo.setMaxWidth(Double.MAX_VALUE);
+        btnLimpiarGrafo.setStyle(estiloBoton);
 
         // Seccion 5: Gestion de archivos CSV
         Label lblCsv = new Label("5. Importar / Exportar CSV");
-        lblCsv.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+        lblCsv.setStyle(estiloTituloSeccion);
 
         cargaCSV = new ComboBox<>();
         cargaCSV.getItems().addAll(
@@ -188,6 +221,7 @@ public class Fondo {
         );
         cargaCSV.setPromptText("Selecciona un CSV de prueba");
         cargaCSV.setMaxWidth(Double.MAX_VALUE);
+        cargaCSV.setStyle(estiloCampo);
 
         operacionesModificables = new ComboBox<>();
         operacionesModificables.getItems().addAll(
@@ -198,15 +232,19 @@ public class Fondo {
         Button btnExaminarCsv = new Button("Examinar CSV...");
         btnCargarCsv.setPrefWidth(122);
         btnExaminarCsv.setPrefWidth(122);
+        btnCargarCsv.setStyle(estiloBoton);
+        btnExaminarCsv.setStyle(estiloBoton);
 
         HBox filaCargaCsv = new HBox(6);
         filaCargaCsv.getChildren().addAll(btnCargarCsv, btnExaminarCsv);
 
         txtNombreGrafo = new TextField();
         txtNombreGrafo.setPromptText("Nombre del archivo a guardar");
+        txtNombreGrafo.setStyle(estiloCampo);
 
         btnExportarCsv = new Button("Guardar Grafo en CSV");
         btnExportarCsv.setMaxWidth(Double.MAX_VALUE);
+        btnExportarCsv.setStyle(estiloBoton);
 
         // Asignacion de eventos
         btnAgregarVertice.setOnAction(event -> agregarVertice());
@@ -270,24 +308,25 @@ public class Fondo {
 
         ScrollPane scrollIzquierdo = new ScrollPane(panelControladores);
         scrollIzquierdo.setFitToWidth(true);
+        scrollIzquierdo.setStyle("-fx-background: " + beigeArena + "; -fx-background-color: " + beigeArena + "; -fx-border-color: " + verdeOlivaMarco + "; -fx-border-width: 0 2 0 0;");
 
-        // Lienzo central
+        // Lienzo central en beige clarito elegante con marco verde oliva
         lienzoGrafo = new Pane();
-        lienzoGrafo.setStyle("-fx-background-color: white; -fx-border-color: #dcdde1;");
+        lienzoGrafo.setStyle("-fx-background-color: " + beigeClaro + "; -fx-border-color: " + verdeOlivaMarco + "; -fx-border-width: 2;");
 
-        // Area inferior de resultados y mensajes del sistema
+        // Area inferior de resultados con marco verde oliva
         VBox panelInferior = new VBox(4);
         panelInferior.setPadding(new Insets(8, 12, 10, 12));
-        panelInferior.setStyle("-fx-background-color: #ecf0f1; -fx-border-color: #dcdde1;");
+        panelInferior.setStyle("-fx-background-color: " + beigeArena + "; -fx-border-color: " + verdeOlivaMarco + "; -fx-border-width: 2 0 0 0;");
 
         Label lblSalida = new Label("Resultados y Mensajes del Sistema:");
-        lblSalida.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+        lblSalida.setStyle("-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: " + textoOliva + ";");
 
         areaResultados = new TextArea();
         areaResultados.setEditable(false);
         areaResultados.setWrapText(true);
         areaResultados.setPrefHeight(130);
-        areaResultados.setStyle("-fx-font-family: monospace; -fx-font-size: 12px;");
+        areaResultados.setStyle("-fx-font-family: monospace; -fx-font-size: 12px; -fx-control-inner-background: " + beigeClaro + "; -fx-border-color: " + verdeOlivaMarco + "; -fx-border-width: 1;");
         areaResultados.setPromptText("Aqui se mostraran los recorridos BFS/DFS, rutas de Dijkstra, conexiones ordenadas y avisos de CSV...");
 
         // Vincular el area de texto a Labels para que todo se muestre en pantalla
@@ -568,7 +607,7 @@ public class Fondo {
     private void mostrarVentanaTexto(String titulo, String texto) {
         TextArea areaTexto = new TextArea(texto);
         areaTexto.setEditable(false);
-        areaTexto.setStyle("-fx-font-family: monospace;");
+        areaTexto.setStyle("-fx-font-family: monospace; -fx-control-inner-background: #FAF7F0;");
         areaTexto.setPrefSize(650, 450);
 
         Alert ventana = new Alert(Alert.AlertType.INFORMATION);

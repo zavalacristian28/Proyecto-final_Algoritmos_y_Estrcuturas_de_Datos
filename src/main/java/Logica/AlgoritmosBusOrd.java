@@ -235,9 +235,7 @@ public class AlgoritmosBusOrd {
         if (grafo == null) {
             return "No hay un grafo cargado";
         }
-        grafo.crearMatrizAdyacencia();
-        double[][] matriz = grafo.getMatrizAdyacencia();
-        int n = matriz.length;
+        int n = grafo.getVertices().size();
         if (inicio < 0 || inicio >= n || destino < 0 || destino >= n) {
             return "Vertice invalido";
         }
@@ -273,9 +271,11 @@ public class AlgoritmosBusOrd {
 
             visitados[menor] = true;
 
-            for (int j = 0; j < n; j++) {
-                if (matriz[menor][j] > 0 && !visitados[j]) {
-                    double nuevaDistancia = distancias[menor] + matriz[menor][j];
+            // Se relajan las aristas de la lista de adyacencia (admite aristas de peso 0)
+            for (Arista arista : grafo.getVertices().get(menor).getAristas()) {
+                int j = arista.getDestino().getId_Vertice();
+                if (!visitados[j]) {
+                    double nuevaDistancia = distancias[menor] + arista.getPeso();
                     if (nuevaDistancia < distancias[j]) {
                         distancias[j] = nuevaDistancia;
                         anteriores[j] = menor;
