@@ -10,23 +10,24 @@ public class Grafo {
     public Grafo() {
         this.vertices = new ArrayList<>();
         this.dirigido = false;
-        matrizAdyacencia=new double[vertices.size()][vertices.size()];
+        matrizAdyacencia = new double[vertices.size()][vertices.size()];
     }
 
     public Grafo(boolean dirigido) {
         this.vertices = new ArrayList<>();
         this.dirigido = dirigido;
-        matrizAdyacencia=new double[vertices.size()][vertices.size()];
+        matrizAdyacencia = new double[vertices.size()][vertices.size()];
     }
-    public ArrayList<Vertice> getVertices(){
+
+    public ArrayList<Vertice> getVertices() {
         return vertices;
     }
 
-    public boolean isDirigido(){
+    public boolean isDirigido() {
         return dirigido;
     }
 
-    //Metodo para saber si ya existe una arista entre dos vertices (del origen hacia el destino)
+    // Verifica si ya existe una arista del vertice origen hacia el vertice destino
     public boolean existeArista(String origen, String destino) {
         Vertice vOrigen = buscarVertice(origen);
         if (vOrigen == null) {
@@ -41,6 +42,9 @@ public class Grafo {
     }
 
     public Vertice buscarVertice(String dato) {
+        if (dato == null) {
+            return null;
+        }
         for (Vertice v : vertices) {
             if (v.getDato().equalsIgnoreCase(dato)) {
                 return v;
@@ -48,20 +52,18 @@ public class Grafo {
         }
         return null;
     }
+
     public Vertice obtenerOCrearVertice(String dato) {
-
         Vertice encontrado = buscarVertice(dato);
-
         if (encontrado != null) {
             return encontrado;
         }
 
         Vertice nuevo = new Vertice(vertices.size(), dato);
-
         vertices.add(nuevo);
-
         return nuevo;
     }
+
     public void agregarArista(int id, String origen, String destino, int peso) {
         Vertice vOrigen = obtenerOCrearVertice(origen);
         Vertice vDestino = obtenerOCrearVertice(destino);
@@ -69,6 +71,7 @@ public class Grafo {
         vOrigen.getAristas().add(nueva);
     }
 
+    // Construye la matriz de adyacencia con base en los vertices y sus aristas actuales
     public void crearMatrizAdyacencia() {
         int n = vertices.size();
         matrizAdyacencia = new double[n][n];
@@ -83,7 +86,7 @@ public class Grafo {
     }
 
     public void mostrarMatrizAdyacencia() {
-
+        crearMatrizAdyacencia();
         System.out.print("\t");
         for (Vertice v : vertices) {
             System.out.print(v.getId_Vertice() + "\t");
@@ -95,13 +98,17 @@ public class Grafo {
             for (int j = 0; j < matrizAdyacencia[i].length; j++) {
                 System.out.print(matrizAdyacencia[i][j] + "\t");
             }
-
             System.out.println();
         }
     }
 
+    // La lista de adyacencia se mantiene en la coleccion de aristas de cada vertice
     public void crearListaAdyacencia() {
-
+        for (Vertice v : vertices) {
+            if (v.getAristas() == null) {
+                v.getAristas();
+            }
+        }
     }
 
     public void mostrarListaAdyacencia() {
@@ -117,12 +124,21 @@ public class Grafo {
         }
     }
 
-    // Métodos añadidos para poder mostrar la matriz y la lista de adyacencia en la interfaz (en lugar de la consola)
+    // Devuelve todas las aristas del grafo en una sola lista
+    public ArrayList<Arista> obtenerTodasLasAristas() {
+        ArrayList<Arista> todas = new ArrayList<>();
+        for (Vertice v : vertices) {
+            todas.addAll(v.getAristas());
+        }
+        return todas;
+    }
+
+    // Genera el texto de la matriz de adyacencia para mostrarlo en la interfaz
     public String matrizAdyacenciaComoTexto() {
         crearMatrizAdyacencia();
         StringBuilder texto = new StringBuilder();
 
-        //Como los nombres pueden ser largos, la matriz usa el id de cada vertice
+        // Como los nombres pueden ser largos, la matriz usa el id de cada vertice
         texto.append("Vertices:\n");
         for (Vertice v : vertices) {
             texto.append(v.getId_Vertice()).append(" = ").append(v.getDato()).append("\n");
@@ -144,6 +160,7 @@ public class Grafo {
         return texto.toString();
     }
 
+    // Genera el texto de la lista de adyacencia para mostrarlo en la interfaz
     public String listaAdyacenciaComoTexto() {
         StringBuilder texto = new StringBuilder();
         for (Vertice v : vertices) {
@@ -157,7 +174,7 @@ public class Grafo {
         return texto.toString();
     }
 
-    //Metodo añadido para poder actualizar el peso cuando se modifica un grafo
+    // Actualiza el peso de una arista existente
     public boolean modificarPeso(String origen, String destino, int nuevoPeso) {
         if (nuevoPeso < 0) {
             return false;
@@ -169,20 +186,20 @@ public class Grafo {
         for (Arista a : vOrigen.getAristas()) {
             if (a.getDestino().getDato().equalsIgnoreCase(destino)) {
                 a.setPeso(nuevoPeso);
+                crearMatrizAdyacencia();
                 return true;
             }
         }
         return false;
     }
 
-    //Metodo para poder actualizar el nombre o texto de un vertice
+    // Actualiza el nombre de un vertice verificando que no exista otro igual
     public boolean modificarVertice(String nombreActual, String nuevoNombre) {
         Vertice vertice = buscarVertice(nombreActual);
         if (vertice == null || nuevoNombre == null || nuevoNombre.trim().isEmpty()) {
             return false;
         }
 
-        // Evitamos nombres duplicados
         if (buscarVertice(nuevoNombre) != null) {
             return false;
         }
@@ -190,7 +207,7 @@ public class Grafo {
         return true;
     }
 
-    //Metodo para eliminar un vertice, donde se eliminar las aristas relacionadas con el
+    // Elimina un vertice junto con todas las aristas que llegan o salen de el
     public boolean eliminarVertice(String nombre) {
         Vertice eliminado = buscarVertice(nombre);
         if (eliminado == null) {
@@ -204,13 +221,13 @@ public class Grafo {
 
         vertices.remove(eliminado);
 
-        //Con este ciclo, se re actualizan los id de los vertices contemplando el eliminado
+        // Reasignar los id de los vertices restantes
         for (int i = 0; i < vertices.size(); i++) {
             vertices.get(i).setId_Vertice(i);
         }
-        //Finalmente se actualiza la matriz de adyacencia
-        crearMatrizAdyacencia();
 
+        // Actualizar la matriz de adyacencia
+        crearMatrizAdyacencia();
         return true;
     }
 
@@ -219,7 +236,6 @@ public class Grafo {
         if (vOrigen == null) {
             return false;
         }
-        // Se busca la arista por medio de una lambda donde se compara el valor del vertice destino de la arista
         boolean eliminada = vOrigen.getAristas().removeIf(
                 a -> a.getDestino().getDato().equalsIgnoreCase(destino));
         if (eliminada) {

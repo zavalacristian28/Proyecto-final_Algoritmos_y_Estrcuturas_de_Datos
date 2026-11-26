@@ -6,8 +6,99 @@ import java.util.Collections;
 
 // Algoritmos de busqueda y ordenamiento
 public class AlgoritmosBusOrd {
-     // Algoritmos de ordenamiento solicitados
-     // Shell sort y QuickSort, implementaciones propias
+
+    // Compara dos aristas segun el criterio elegido:
+    // porPeso = true - ordena por peso ascendente
+    // porPeso = false - ordena alfabeticamente por nombre de verticees
+    private static int compararAristas(Arista a1, Arista a2, boolean porPeso) {
+        if (porPeso) {
+            int compPeso = Integer.compare(a1.getPeso(), a2.getPeso());
+            if (compPeso != 0) {
+                return compPeso;
+            }
+            int compOrigen = a1.getOrigen().getDato().compareToIgnoreCase(a2.getOrigen().getDato());
+            if (compOrigen != 0) {
+                return compOrigen;
+            }
+            return a1.getDestino().getDato().compareToIgnoreCase(a2.getDestino().getDato());
+        } else {
+            int compOrigen = a1.getOrigen().getDato().compareToIgnoreCase(a2.getOrigen().getDato());
+            if (compOrigen != 0) {
+                return compOrigen;
+            }
+            int compDestino = a1.getDestino().getDato().compareToIgnoreCase(a2.getDestino().getDato());
+            if (compDestino != 0) {
+                return compDestino;
+            }
+            return Integer.compare(a1.getPeso(), a2.getPeso());
+        }
+    }
+
+    // Shell Sort para ordenar conexiones (aristas) por peso o por nombre de vertices
+    public static void shellAristas(Arista[] a, int n, boolean porPeso) {
+        int inter = n / 2;
+        boolean band;
+        int i;
+        Arista aux;
+        while (inter > 0) {
+            band = true;
+            while (band) {
+                band = false;
+                i = 0;
+                while ((i + inter) < n) {
+                    if (compararAristas(a[i], a[i + inter], porPeso) > 0) {
+                        aux = a[i];
+                        a[i] = a[i + inter];
+                        a[i + inter] = aux;
+                        band = true;
+                    }
+                    i = i + 1;
+                }
+            }
+            inter = inter / 2;
+        }
+    }
+
+    // QuickSort para ordenar conexiones (aristas) por peso o por nombre de vertices
+    public static void quickSortAristas(Arista[] A, int ini, int fin, boolean porPeso) {
+        int izq = ini;
+        int der = fin;
+        int pos = ini;
+        boolean band = true;
+
+        while (band) {
+            band = false;
+
+            while (compararAristas(A[pos], A[der], porPeso) <= 0 && pos != der) {
+                der = der - 1;
+            }
+            if (pos != der) {
+                Arista aux = A[pos];
+                A[pos] = A[der];
+                A[der] = aux;
+                pos = der;
+                while (compararAristas(A[pos], A[izq], porPeso) >= 0 && pos != izq) {
+                    izq = izq + 1;
+                }
+                if (pos != izq) {
+                    band = true;
+                    aux = A[pos];
+                    A[pos] = A[izq];
+                    A[izq] = aux;
+                    pos = izq;
+                }
+            }
+        }
+
+        if (ini < (pos - 1)) {
+            quickSortAristas(A, ini, pos - 1, porPeso);
+        }
+        if ((pos + 1) < fin) {
+            quickSortAristas(A, pos + 1, fin, porPeso);
+        }
+    }
+
+    // Shell Sort para arreglo de nombres de vertices
     public static void shell(String[] a, int n) {
         int inter = n / 2;
         boolean band;
@@ -32,6 +123,7 @@ public class AlgoritmosBusOrd {
         }
     }
 
+    // QuickSort para arreglo de nombres de vertices
     public static void QuickSort(String[] A, int ini, int fin) {
         int izq = ini;
         int der = fin;
@@ -70,7 +162,7 @@ public class AlgoritmosBusOrd {
         }
     }
 
-     // Metodos de busqueda BFS y DFS
+    // Busqueda en anchura (BFS)
     public static String BFS(Grafo grafo, int inicio) {
         if (grafo == null || inicio < 0 || inicio >= grafo.getVertices().size()) {
             return "Vertice inicial invalido";
@@ -103,6 +195,7 @@ public class AlgoritmosBusOrd {
         return recorridos.toString();
     }
 
+    // Busqueda en profundidad (DFS)
     public static String DFS(Grafo grafo, int inicio) {
         if (grafo == null || inicio < 0 || inicio >= grafo.getVertices().size()) {
             return "Vertice inicial invalido";
@@ -137,6 +230,7 @@ public class AlgoritmosBusOrd {
         return recorrido.toString();
     }
 
+    // Algoritmo de Dijkstra para encontrar la ruta de menor costo entre dos vertices
     public static String dijkstra(Grafo grafo, int inicio, int destino) {
         if (grafo == null) {
             return "No hay un grafo cargado";

@@ -4,6 +4,7 @@ import com.example.proyecto.Fondo;
 import com.example.proyecto.Labels;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class AccionesConElGrafo {
     private ArrayList<Grafo> grafos;
@@ -65,6 +66,103 @@ public class AccionesConElGrafo {
         Labels.texto(resultado);
     }
 
+    // Obtiene las conexiones del grafo sin duplicar las aristas inversas si es no dirigido
+    public static Arista[] obtenerAristasUnicas(Grafo grafo) {
+        ArrayList<Arista> lista = new ArrayList<>();
+        HashSet<String> registradas = new HashSet<>();
+
+        for (Vertice v : grafo.getVertices()) {
+            for (Arista a : v.getAristas()) {
+                String origen = a.getOrigen().getDato().toLowerCase();
+                String destino = a.getDestino().getDato().toLowerCase();
+                String clave = origen + "->" + destino;
+
+                if (!grafo.isDirigido()) {
+                    String claveInversa = destino + "->" + origen;
+                    if (registradas.contains(clave) || registradas.contains(claveInversa)) {
+                        continue;
+                    }
+                }
+                registradas.add(clave);
+                lista.add(a);
+            }
+        }
+        return lista.toArray(new Arista[0]);
+    }
+
+    // Ordena las conexiones del grafo con QuickSort (porPeso = true por peso, false por nombre)
+    public static String ordenarConexionesQuickSort(Grafo grafo, boolean porPeso) {
+        if (grafo == null || grafo.getVertices().isEmpty()) {
+            Labels.texto("No hay un grafo cargado");
+            return "";
+        }
+
+        Arista[] aristas = obtenerAristasUnicas(grafo);
+        if (aristas.length == 0) {
+            Labels.texto("El grafo no tiene conexiones para ordenar");
+            return "";
+        }
+
+        if (aristas.length > 1) {
+            AlgoritmosBusOrd.quickSortAristas(aristas, 0, aristas.length - 1, porPeso);
+        }
+
+        String criterio = porPeso ? "peso" : "nombre de vertices";
+        String separador = grafo.isDirigido() ? " -> " : " - ";
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Conexiones ordenadas con QuickSort (por ").append(criterio).append("):\n");
+
+        for (Arista a : aristas) {
+            resultado.append(a.getOrigen().getDato())
+                    .append(separador)
+                    .append(a.getDestino().getDato())
+                    .append(" | Peso: ")
+                    .append(a.getPeso())
+                    .append("\n");
+        }
+
+        String textoFinal = resultado.toString();
+        Labels.texto(textoFinal);
+        return textoFinal;
+    }
+
+    // Ordena las conexiones del grafo con Shell Sort (porPeso = true por peso, false por nombre)
+    public static String ordenarConexionesShell(Grafo grafo, boolean porPeso) {
+        if (grafo == null || grafo.getVertices().isEmpty()) {
+            Labels.texto("No hay un grafo cargado");
+            return "";
+        }
+
+        Arista[] aristas = obtenerAristasUnicas(grafo);
+        if (aristas.length == 0) {
+            Labels.texto("El grafo no tiene conexiones para ordenar");
+            return "";
+        }
+
+        if (aristas.length > 1) {
+            AlgoritmosBusOrd.shellAristas(aristas, aristas.length, porPeso);
+        }
+
+        String criterio = porPeso ? "peso" : "nombre de vertices";
+        String separador = grafo.isDirigido() ? " -> " : " - ";
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Conexiones ordenadas con Shell Sort (por ").append(criterio).append("):\n");
+
+        for (Arista a : aristas) {
+            resultado.append(a.getOrigen().getDato())
+                    .append(separador)
+                    .append(a.getDestino().getDato())
+                    .append(" | Peso: ")
+                    .append(a.getPeso())
+                    .append("\n");
+        }
+
+        String textoFinal = resultado.toString();
+        Labels.texto(textoFinal);
+        return textoFinal;
+    }
+
+    // Ordena los nombres de los vertices con QuickSort
     public static String ordenarQuicksort(Grafo grafo) {
         int n = grafo.getVertices().size();
         String[] vertices = new String[n];
@@ -82,6 +180,7 @@ public class AccionesConElGrafo {
         return resultado.toString();
     }
 
+    // Ordena los nombres de los vertices con Shell Sort
     public static String ordenarShell(Grafo grafo) {
         int n = grafo.getVertices().size();
         String[] vertices = new String[n];
@@ -100,8 +199,21 @@ public class AccionesConElGrafo {
     }
 
     public static Resultados medirTiempo(String metodo, Grafo grafo, int inicio, int destino) {
+        Labels.setModoSilencioso(true);
         long tiempoInicial = System.nanoTime();
         switch (metodo) {
+            case "Quicksort Peso":
+                ordenarConexionesQuickSort(grafo, true);
+                break;
+            case "Quicksort Nombre":
+                ordenarConexionesQuickSort(grafo, false);
+                break;
+            case "Shell Peso":
+                ordenarConexionesShell(grafo, true);
+                break;
+            case "Shell Nombre":
+                ordenarConexionesShell(grafo, false);
+                break;
             case "Quicksort":
                 ordenarQuicksort(grafo);
                 break;
@@ -119,16 +231,14 @@ public class AccionesConElGrafo {
                 break;
         }
         long tiempoFinal = System.nanoTime();
+        Labels.setModoSilencioso(false);
+
         double tiempoMS = (tiempoFinal - tiempoInicial) / 1_000_000.0;
         return new Resultados(metodo, tiempoMS, grafo.getVertices().size(), contarAristas(grafo));
     }
 
     public static int contarAristas(Grafo grafo) {
-        int cantidad = 0;
-        for (Vertice v : grafo.getVertices()) {
-            cantidad += v.getAristas().size();
-        }
-        return cantidad;
+        return obtenerAristasUnicas(grafo).length;
     }
 
     public static Resultados medirCargaArchivo(String nombreArchivo) {
