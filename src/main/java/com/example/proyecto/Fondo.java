@@ -51,6 +51,7 @@ public class Fondo {
     private static ComboBox<String> operacionesModificables;
     private static ComboBox<String> verticesDelGrafo;
     private static ComboBox<String> verticesDestino;
+    private ComboBox<String> comboCriterioOrden;
 
     public Fondo() {
 
@@ -146,7 +147,7 @@ public class Fondo {
         Button btnLimpiarGrafo = new Button("Limpiar Lienzo");
         btnLimpiarGrafo.setMaxWidth(Double.MAX_VALUE);
 
-        //GESTION DE ARCHIVOS CSV
+        // GESTION DE ARCHIVOS CSV
         Label lblCsv = new Label("Gestion de Archivos CSV");
         lblCsv.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
 
@@ -199,6 +200,23 @@ public class Fondo {
         Button btnDijkstra = new Button("Ruta Optima (Dijkstra)");
         btnDijkstra.setMaxWidth(Double.MAX_VALUE);
 
+        //  ALGORITMOS DE ORDENAMIENTO
+        Label lblOrdenamiento = new Label("Ordenar Conexiones");
+        lblOrdenamiento.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
+
+        comboCriterioOrden = new ComboBox<>();
+        comboCriterioOrden.getItems().addAll("Por Nombre de Vertice");
+        comboCriterioOrden.setPromptText("Criterio de ordenamiento");
+        comboCriterioOrden.setMaxWidth(Double.MAX_VALUE);
+
+        Button btnQuickSort = new Button("QuickSort");
+        Button btnShellSort = new Button("Shell Sort");
+        btnQuickSort.setPrefWidth(118);
+        btnShellSort.setPrefWidth(118);
+
+        HBox filaOrden = new HBox(8);
+        filaOrden.getChildren().addAll(btnQuickSort, btnShellSort);
+
         // EVENTOS DE LOS BOTONES
         btnExportarCsv.setOnAction(event -> {
             botonExportarPresionado = true;
@@ -219,6 +237,8 @@ public class Fondo {
         btnBfs.setOnAction(event -> ejecutarBFS());
         btnDfs.setOnAction(event -> ejecutarDFS());
         btnDijkstra.setOnAction(event -> ejecutarDijkstra());
+        btnQuickSort.setOnAction(event -> ejecutarOrdenamiento("QuickSort"));
+        btnShellSort.setOnAction(event -> ejecutarOrdenamiento("Shell Sort"));
 
         panelControladores.getChildren().addAll(
                 lblManual,
@@ -246,7 +266,11 @@ public class Fondo {
                 verticesDelGrafo,
                 verticesDestino,
                 filaRecorridos,
-                btnDijkstra
+                btnDijkstra,
+                new Separator(),
+                lblOrdenamiento,
+                comboCriterioOrden,
+                filaOrden
         );
 
         ScrollPane scrollIzquierdo = new ScrollPane(panelControladores);
@@ -554,7 +578,7 @@ public class Fondo {
         }
     }
 
-    //Algoritmos de busqueda y la ruta optima
+    // ALGORITMOS DE BUSQUEDA Y RUTA OPTIMA
 
     private void ejecutarBFS() {
         if (grafoActual.getVertices().isEmpty()) {
@@ -603,6 +627,23 @@ public class Fondo {
         mostrarVentanaTexto("Ruta Optima - Dijkstra", resultado);
     }
 
+    private void ejecutarOrdenamiento(String algoritmo) {
+        if (grafoActual.getVertices().isEmpty()) {
+            Labels.texto("Primero carga o crea un grafo");
+            return;
+        }
+        String criterio = comboCriterioOrden.getValue();
+        if (criterio == null) {
+            Labels.texto("Selecciona un criterio de ordenamiento");
+            return;
+        }
+
+        String resultado = algoritmo.equals("QuickSort")
+                ? AccionesConElGrafo.ordenarQuicksort(grafoActual)
+                : AccionesConElGrafo.ordenarShell(grafoActual);
+        mostrarVentanaTexto("Ordenamiento (" + algoritmo + ")", resultado);
+    }
+
     private String bfsSobreGrafo(Grafo grafo, int inicio) {
         int n = grafo.getVertices().size();
         if (inicio < 0 || inicio >= n) {
@@ -633,8 +674,8 @@ public class Fondo {
         return recorrido.toString();
     }
 
+    // Getters y metodos estaticos
 
-    //Getters y metodos estaticos
 
     public static String valorTxtOrigen() {
         return instancia.txtOrigen.getText();
